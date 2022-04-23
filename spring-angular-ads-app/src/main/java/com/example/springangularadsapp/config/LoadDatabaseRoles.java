@@ -15,19 +15,18 @@ public class LoadDatabaseRoles {
 
     @Bean
     CommandLineRunner initDatabase(RoleRepository roleRepository) {
-
         return args -> {
 
-            if (!roleRepository.existsByName(String.valueOf(ERole.ROLE_USER))) {
+            if (!roleRepository.existsByName(ERole.ROLE_USER)) {
                 roleRepository.save(new Role(ERole.ROLE_USER));
                 log.info("LoadDatabaseRoles => added ERole.ROLE_USER");
             }
-            if (!roleRepository.existsByName(String.valueOf(ERole.ROLE_MODERATOR))) {
+            if (!roleRepository.existsByName(ERole.ROLE_MODERATOR)) {
                 roleRepository.save(new Role(ERole.ROLE_MODERATOR));
                 log.info("LoadDatabaseRoles => added ERole.ROLE_MODERATOR");
             }
 
-            if (!roleRepository.existsByName(String.valueOf(ERole.ROLE_ADMIN))) {
+            if (!roleRepository.existsByName(ERole.ROLE_ADMIN)) {
                 roleRepository.save(new Role(ERole.ROLE_ADMIN));
                 log.info("LoadDatabaseRoles => added ERole.ROLE_ADMIN");
             }
