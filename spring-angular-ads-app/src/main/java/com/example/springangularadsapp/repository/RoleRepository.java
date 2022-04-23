@@ -9,4 +9,6 @@ import com.example.springangularadsapp.models.Role;
 
 public interface RoleRepository extends MongoRepository<Role, String> {
   Optional<Role> findByName(ERole name);
+  Boolean existsByName(String name);
+
 }
