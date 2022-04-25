@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/api/stats-logs")
 @RestController
+@RequestMapping("/api/stats-logs")
 public class StatsLogController {
     private final StatsLogRepository repository;
 

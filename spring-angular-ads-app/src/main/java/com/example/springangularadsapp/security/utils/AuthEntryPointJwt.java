@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.security.jwt;
+package com.example.springangularadsapp.security.utils;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.security;
 
-import com.example.springangularadsapp.security.jwt.JwtUtils;
+import com.example.springangularadsapp.security.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,20 +12,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.springangularadsapp.security.jwt.AuthEntryPointJwt;
-import com.example.springangularadsapp.security.jwt.AuthTokenFilter;
-import com.example.springangularadsapp.security.services.UserDetailsServiceImpl;
+import com.example.springangularadsapp.security.utils.AuthEntryPointJwt;
+import com.example.springangularadsapp.security.utils.AuthTokenFilter;
+import com.example.springangularadsapp.security.services.CustomUserDetailsService;
 
 @Configuration
 //@EnableWebSecurity
 //@EnableGlobalMethodSecurity(securedEnabled = true,jsr250Enabled = true,prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
     private final AuthEntryPointJwt authEntryPointJwt;
     private final JwtUtils jwtUtils;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt authEntryPointJwt, JwtUtils jwtUtils) {
+    public WebSecurityConfig(CustomUserDetailsService userDetailsService, AuthEntryPointJwt authEntryPointJwt, JwtUtils jwtUtils) {
         this.userDetailsService = userDetailsService;
         this.authEntryPointJwt = authEntryPointJwt;
         this.jwtUtils = jwtUtils;

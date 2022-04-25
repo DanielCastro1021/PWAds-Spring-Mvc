@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import  com.example.springangularadsapp.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserDetailsImpl implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private String id;
@@ -26,8 +26,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String id, String username, String email, String password,
+                             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -35,12 +35,12 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static CustomUserDetails build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(
+        return new CustomUserDetails(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
@@ -97,7 +97,7 @@ public class UserDetailsImpl implements UserDetails {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UserDetailsImpl user = (UserDetailsImpl) o;
+        CustomUserDetails user = (CustomUserDetails) o;
         return Objects.equals(id, user.id);
     }
 }

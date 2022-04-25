@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.security.jwt;
+package com.example.springangularadsapp.security.utils;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.springangularadsapp.security.services.UserDetailsImpl;
+import com.example.springangularadsapp.security.services.CustomUserDetails;
 import io.jsonwebtoken.*;
 
 @Component
@@ -23,7 +23,7 @@ public class JwtUtils {
 
 	public String generateJwtToken(Authentication authentication) {
 
-		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+		CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
 
 		return Jwts.builder()
 				.setSubject((userPrincipal.getUsername()))
