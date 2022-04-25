@@ -1,7 +1,7 @@
 package com.example.springangularadsapp.aop.aspect;
 
-import com.example.springangularadsapp.exception.AccessValidationException;
-import com.example.springangularadsapp.models.ERole;
+import com.example.springangularadsapp.security.exception.AccessValidationException;
+import com.example.springangularadsapp.enumerations.ERole;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
