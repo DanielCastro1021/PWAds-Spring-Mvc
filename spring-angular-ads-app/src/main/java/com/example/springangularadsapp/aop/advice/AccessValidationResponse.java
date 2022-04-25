@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.aop.advice;
 
-import com.example.springangularadsapp.exception.AccessValidationException;
+import com.example.springangularadsapp.security.exception.AccessValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

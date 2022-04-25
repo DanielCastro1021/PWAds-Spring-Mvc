@@ -24,22 +24,25 @@ public class StatsLogAPI {
         this.repository = repository;
     }
 
-    @Pointcut("execution(* com.example.springangularadsapp.controller..*.*(..))")
-    void allMethodsInControllers() {
+    @Pointcut("execution(* com.example.springangularadsapp..controller..*.*(..))")
+    void allMethodsInControllerPackage() {
     }
 
-    @Around(value = "allMethodsInControllers()")
-    public Object profileExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around(value = "allMethodsInControllerPackage()")
+    public Object profileExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
-        Object result = joinPoint.proceed();
+        Object result = proceedingJoinPoint.proceed();
         long elapsedTime = System.currentTimeMillis() - start;
+
         String requestId = UUID.randomUUID().toString();
-        String className = joinPoint.getSignature().getDeclaringTypeName();
-        String methodName = joinPoint.getSignature().getName();
+        String className = proceedingJoinPoint.getSignature().getDeclaringTypeName();
+        String methodName = proceedingJoinPoint.getSignature().getName();
         String apiName = className + "." + methodName;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        StatsLog statsLog = new StatsLog(requestId, request.getHeader("host"), request.getMethod(), request.getRequestURI(), apiName, Arrays.toString(joinPoint.getArgs()), elapsedTime);
+
+        StatsLog statsLog = new StatsLog(requestId, request.getHeader("host"), request.getMethod(), request.getRequestURI(), apiName, Arrays.toString(proceedingJoinPoint.getArgs()), elapsedTime);
         this.repository.save(statsLog);
+
         return result;
     }
 }
