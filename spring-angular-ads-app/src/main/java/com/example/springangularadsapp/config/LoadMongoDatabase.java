@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.config;
 
-import com.example.springangularadsapp.models.ERole;
+import com.example.springangularadsapp.enumerations.ERole;
 import com.example.springangularadsapp.models.Role;
 import com.example.springangularadsapp.repository.RoleRepository;
 import org.slf4j.Logger;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class LoadDatabaseRoles {
-    private static final Logger log = LoggerFactory.getLogger(LoadDatabaseRoles.class);
+public class LoadMongoDatabase {
+    private static final Logger log = LoggerFactory.getLogger(LoadMongoDatabase.class);
 
     @Bean
     CommandLineRunner initDatabase(RoleRepository roleRepository) {
