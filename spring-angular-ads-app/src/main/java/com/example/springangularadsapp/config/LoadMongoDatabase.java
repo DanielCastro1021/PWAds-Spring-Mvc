@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.config;
 
-import com.example.springangularadsapp.enumerations.ERole;
+import com.example.springangularadsapp.constants.enumeration.ERole;
 import com.example.springangularadsapp.models.Role;
 import com.example.springangularadsapp.repository.RoleRepository;
 import org.slf4j.Logger;

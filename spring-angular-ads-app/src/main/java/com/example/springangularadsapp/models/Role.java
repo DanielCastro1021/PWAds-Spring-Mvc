@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.models;
 
-import com.example.springangularadsapp.enumerations.ERole;
+import com.example.springangularadsapp.constants.enumeration.ERole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

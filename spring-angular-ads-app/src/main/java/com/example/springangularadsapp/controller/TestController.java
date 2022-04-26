@@ -1,10 +1,8 @@
 package com.example.springangularadsapp.controller;
 
-import com.example.springangularadsapp.aop.annotation.AdminAccess;
-import com.example.springangularadsapp.aop.annotation.ModeratorAccess;
-import com.example.springangularadsapp.aop.annotation.UserAccess;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import com.example.springangularadsapp.constants.annotation.AdminAccess;
+import com.example.springangularadsapp.constants.annotation.ModeratorAccess;
+import com.example.springangularadsapp.constants.annotation.UserAccess;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

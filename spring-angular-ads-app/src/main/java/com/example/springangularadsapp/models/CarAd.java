@@ -1,6 +1,5 @@
 package com.example.springangularadsapp.models;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @ToString
-@TypeAlias("car")
+@TypeAlias("car-ad")
 @Document(collection = "ads")
 public class CarAd extends Ad {
     private String maker;

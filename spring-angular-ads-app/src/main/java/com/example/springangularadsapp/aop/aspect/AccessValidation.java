@@ -1,7 +1,7 @@
 package com.example.springangularadsapp.aop.aspect;
 
 import com.example.springangularadsapp.security.exception.AccessValidationException;
-import com.example.springangularadsapp.enumerations.ERole;
+import com.example.springangularadsapp.constants.enumeration.ERole;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
@@ -24,15 +24,15 @@ public class AccessValidation {
     private static final Logger logger = LoggerFactory.getLogger(AccessValidation.class);
 
 
-    @Pointcut("@annotation(com.example.springangularadsapp.aop.annotation.AdminAccess)")
+    @Pointcut("@annotation(com.example.springangularadsapp.constants.annotation.AdminAccess)")
     public void methodsWithAdminAccessAnnotation() {
     }
 
-    @Pointcut("@annotation(com.example.springangularadsapp.aop.annotation.ModeratorAccess)")
+    @Pointcut("@annotation(com.example.springangularadsapp.constants.annotation.ModeratorAccess)")
     public void methodsWithModeratorAccessAnnotation() {
     }
 
-    @Pointcut("@annotation(com.example.springangularadsapp.aop.annotation.UserAccess)")
+    @Pointcut("@annotation(com.example.springangularadsapp.constants.annotation.UserAccess)")
     public void methodsWithUserAccessAnnotation() {
     }
 

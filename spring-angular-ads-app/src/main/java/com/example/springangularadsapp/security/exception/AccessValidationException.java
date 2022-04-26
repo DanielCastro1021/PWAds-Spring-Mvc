@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.security.exception;
 
-import com.example.springangularadsapp.enumerations.ERole;
+import com.example.springangularadsapp.constants.enumeration.ERole;
 
 public class AccessValidationException extends RuntimeException {
 

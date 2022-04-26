@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springangularadsapp.enumerations.ERole;
+import com.example.springangularadsapp.constants.enumeration.ERole;
 import com.example.springangularadsapp.models.Role;
 import com.example.springangularadsapp.models.User;
 import com.example.springangularadsapp.security.dto.request.LoginRequest;

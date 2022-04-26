@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.enumerations;
+package com.example.springangularadsapp.constants.enumeration;
 
 public enum ERole {
   ROLE_USER,
