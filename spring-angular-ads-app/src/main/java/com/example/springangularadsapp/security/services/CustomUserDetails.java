@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import  com.example.springangularadsapp.models.User;
+import com.example.springangularadsapp.security.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CustomUserDetails implements UserDetails {

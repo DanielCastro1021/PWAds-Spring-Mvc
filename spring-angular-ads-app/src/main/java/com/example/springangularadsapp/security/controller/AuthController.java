@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springangularadsapp.constants.enumeration.ERole;
-import com.example.springangularadsapp.models.Role;
-import com.example.springangularadsapp.models.User;
+import com.example.springangularadsapp.security.models.ERole;
+import com.example.springangularadsapp.security.models.Role;
+import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.dto.request.LoginRequest;
 import com.example.springangularadsapp.security.dto.response.JwtResponse;
 import com.example.springangularadsapp.security.dto.response.MessageResponse;
-import com.example.springangularadsapp.repository.RoleRepository;
-import com.example.springangularadsapp.repository.UserRepository;
+import com.example.springangularadsapp.security.repository.RoleRepository;
+import com.example.springangularadsapp.security.repository.UserRepository;
 import com.example.springangularadsapp.security.utils.JwtUtils;
 import com.example.springangularadsapp.security.services.CustomUserDetails;
 

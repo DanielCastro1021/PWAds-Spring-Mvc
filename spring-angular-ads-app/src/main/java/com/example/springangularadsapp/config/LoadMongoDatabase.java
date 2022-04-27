@@ -1,8 +1,8 @@
 package com.example.springangularadsapp.config;
 
-import com.example.springangularadsapp.constants.enumeration.ERole;
-import com.example.springangularadsapp.models.Role;
-import com.example.springangularadsapp.repository.RoleRepository;
+import com.example.springangularadsapp.security.models.ERole;
+import com.example.springangularadsapp.security.models.Role;
+import com.example.springangularadsapp.security.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
