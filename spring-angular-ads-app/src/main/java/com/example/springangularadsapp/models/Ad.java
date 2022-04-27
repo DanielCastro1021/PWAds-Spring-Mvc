@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -43,5 +44,9 @@ public abstract class Ad {
 
     public Ad(User owner) {
         this.owner = owner;
+    }
+
+    public boolean checkOwner(String username) {
+        return Objects.equals(this.owner.getUsername(), username);
     }
 }
