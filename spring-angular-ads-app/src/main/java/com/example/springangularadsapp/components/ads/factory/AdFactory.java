@@ -1,12 +1,12 @@
 package com.example.springangularadsapp.components.ads.factory;
 
 
-import com.example.springangularadsapp.components.ads.ad.AdDto;
-import com.example.springangularadsapp.components.ads.basic_ad.BasicAdDto;
-import com.example.springangularadsapp.components.ads.car_ad.CarAdDto;
-import com.example.springangularadsapp.components.ads.ad.Ad;
-import com.example.springangularadsapp.components.ads.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.car_ad.CarAd;
+import com.example.springangularadsapp.components.ads.domain.ad.AdDto;
+import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAdDto;
+import com.example.springangularadsapp.components.ads.domain.car_ad.CarAdDto;
+import com.example.springangularadsapp.components.ads.domain.ad.Ad;
+import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
 import org.springframework.stereotype.Component;
 
 @Component

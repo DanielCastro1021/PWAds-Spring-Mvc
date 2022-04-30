@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.ads.ad;
+package com.example.springangularadsapp.components.ads.domain.ad;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,4 +13,5 @@ import java.util.List;
 @ToString
 public class AdDto {
     private List<Binary> imageList;
+    private String ownerUsername;
 }

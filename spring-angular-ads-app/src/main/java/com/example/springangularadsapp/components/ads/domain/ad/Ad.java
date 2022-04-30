@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.ads.ad;
+package com.example.springangularadsapp.components.ads.domain.ad;
 
 import com.example.springangularadsapp.security.models.User;
 import lombok.EqualsAndHashCode;

@@ -1,11 +1,14 @@
-package com.example.springangularadsapp.components.stats_logs;
+package com.example.springangularadsapp.audit;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,6 +18,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class StatsLog {
     @Id
     private String id;
+    @CreatedDate
+    private Date createdDate;
     private String request_id;
     private String host;
     private String http_method;

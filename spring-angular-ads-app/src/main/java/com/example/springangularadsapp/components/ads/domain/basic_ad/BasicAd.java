@@ -1,6 +1,6 @@
-package com.example.springangularadsapp.components.ads.basic_ad;
+package com.example.springangularadsapp.components.ads.domain.basic_ad;
 
-import com.example.springangularadsapp.components.ads.ad.Ad;
+import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;

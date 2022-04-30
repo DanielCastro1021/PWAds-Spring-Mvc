@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.exceptions;
+package com.example.springangularadsapp.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String username) {

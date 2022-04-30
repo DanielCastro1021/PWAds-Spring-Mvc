@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.stats_logs;
+package com.example.springangularadsapp.audit;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

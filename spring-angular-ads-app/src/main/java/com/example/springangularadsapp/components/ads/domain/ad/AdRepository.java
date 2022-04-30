@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.ads.ad;
+package com.example.springangularadsapp.components.ads.domain.ad;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

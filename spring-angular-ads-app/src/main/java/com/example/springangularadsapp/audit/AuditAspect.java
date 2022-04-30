@@ -1,7 +1,5 @@
-package com.example.springangularadsapp.components.stats_logs;
+package com.example.springangularadsapp.audit;
 
-import com.example.springangularadsapp.components.stats_logs.StatsLog;
-import com.example.springangularadsapp.components.stats_logs.StatsLogRepository;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,19 +14,19 @@ import java.util.UUID;
 
 @Component
 @Aspect
-public class StatsLogAPI {
+public class AuditAspect {
 
     private final StatsLogRepository repository;
 
-    public StatsLogAPI(StatsLogRepository repository) {
+    public AuditAspect(StatsLogRepository repository) {
         this.repository = repository;
     }
 
-    @Pointcut("execution(* com.example.springangularadsapp..controller..*.*(..))")
-    void allMethodsInControllerPackage() {
+    @Pointcut("execution(* com.example.springangularadsapp.components..*..controller..*.*(..))")
+    void allMethodsInAComponentsControllerPackage() {
     }
 
-    @Around(value = "allMethodsInControllerPackage()")
+    @Around(value = "allMethodsInAComponentsControllerPackage()")
     public Object profileExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();

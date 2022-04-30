@@ -1,6 +1,6 @@
-package com.example.springangularadsapp.components.ads.car_ad;
+package com.example.springangularadsapp.components.ads.domain.car_ad;
 
-import com.example.springangularadsapp.components.ads.ad.Ad;
+import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

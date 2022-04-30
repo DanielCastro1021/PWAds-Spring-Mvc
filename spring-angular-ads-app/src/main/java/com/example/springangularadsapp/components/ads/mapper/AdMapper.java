@@ -1,11 +1,11 @@
 package com.example.springangularadsapp.components.ads.mapper;
 
 
-import com.example.springangularadsapp.components.ads.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.basic_ad.BasicAdDto;
-import com.example.springangularadsapp.components.ads.car_ad.CarAd;
-import com.example.springangularadsapp.components.ads.car_ad.CarAdDto;
-import com.example.springangularadsapp.components.exceptions.UserNotFoundException;
+import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAdDto;
+import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
+import com.example.springangularadsapp.components.ads.domain.car_ad.CarAdDto;
+import com.example.springangularadsapp.exceptions.UserNotFoundException;
 import com.example.springangularadsapp.components.ads.factory.AdFactory;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;

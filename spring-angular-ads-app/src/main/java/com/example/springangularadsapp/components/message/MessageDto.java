@@ -8,8 +8,6 @@ import lombok.Setter;
 @Setter
 @Data
 public class MessageDto {
-    private String from;
-
     private String to;
 
     private String adId;

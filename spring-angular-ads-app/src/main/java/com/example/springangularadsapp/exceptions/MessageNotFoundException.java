@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.exceptions;
+package com.example.springangularadsapp.exceptions;
 
 public class MessageNotFoundException extends RuntimeException {
     public MessageNotFoundException(String id) {
