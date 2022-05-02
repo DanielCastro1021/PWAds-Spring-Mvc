@@ -1,3 +1,5 @@
+var imgSection = document.querySelector('section');
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
     navigator.serviceWorker
@@ -50,9 +52,15 @@ function imgLoad(imgJSON) {
   });
 }
 
-var imgSection = document.querySelector('section');
+function loadNavBar() {
+  $('#navbar').load('/components/util/navbar.html', () => {
+    $('#home-tab-button').toggleClass('active');
+  });
+}
 
 window.onload = function () {
+  // load navbar
+  loadNavBar();
   // load each set of image, alt text, name and caption
   for (var i = 0; i <= Gallery.images.length - 1; i++) {
     imgLoad(Gallery.images[i]).then(
