@@ -1,16 +1,7 @@
 var CACHE_NAME = 'cache-v1';
 var staticAssets = [
-  '/',
-  '/css/style.css',
-  '/html/fallout.html',
-  '/html/push-notifications.html',
-  '/js/app.js',
-  '/js/image-list.js',
-  '/js/notifications.js',
-  '/js/push-notifications.js',
-  '/index.html',
 ];
-
+/**
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -67,3 +58,4 @@ self.addEventListener('push', (event) => {
     })
   );
 });
+*/

@@ -1,93 +1,35 @@
-<!-- Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid justify-content-between">
-    <!-- Left elements -->
-    <div class="d-flex">
-      <!-- Brand -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="home-tab-button"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-home"
-            type="button"
-            role="tab"
-            aria-controls="pills-home"
-            aria-selected="true"
-            onclick="window.location.href='/index.html'"
-          >
-            Home
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="ads-tab-button"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-ads"
-            type="button"
-            role="tab"
-            aria-controls="pills-ads"
-            aria-selected="false"
-            onclick="window.location.href='/components/ads/list-ads.html'"
-          >
-            Ads
-          </button>
-        </li>
-      </ul>
-    </div>
-    <!-- Left elements -->
-
-    <!-- Right elements -->
-    <ul class="navbar-nav flex-row">
-      <li class="nav-item dropdown me-3 me-lg-1">
-        <a
-          class="nav-link dropdown-toggle hidden-arrow"
-          href="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i class="fas fa-comments fa-lg"></i>
-
-          <span class="badge rounded-pill badge-notification bg-danger">6</span>
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <a class="dropdown-item" href="#">Some news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Another news</a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </li>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li id="home-tab-button"><a href="../../index.html">Home</a></li>
+            <li id="ads-tab-button"><a href="/components/ads/list-ads.html">Ads</a></li>
+            <li id="messages-tab-button"><a href="#">Messages</a></li>
         </ul>
-      </li>
-
-      <li class="nav-item dropdown me-3 me-lg-1"></li>
-      <li class="nav-item dropdown me-3 me-lg-1"></li>
-
-      <li class="nav-item me-3 me-lg-1">
-        <a class="nav-link d-sm-flex align-items-sm-center" href="#">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
-            class="rounded-circle"
-            height="22"
-            alt="Black and White Portrait of a Man"
-            loading="lazy"
-          />
-          <strong class="d-none d-sm-block ms-1">John</strong>
-        </a>
-      </li>
-    </ul>
-    <!-- Right elements -->
-  </div>
+        <ul id="auth" class="nav navbar-nav navbar-right">
+            <li><a href="/components/authentication/register.html"><span class="glyphicon glyphicon-user"></span> Sign
+                Up</a>
+            </li>
+            <li><a href="/components/authentication/login.html"><span class="glyphicon glyphicon-log-in"></span>
+                Login</a>
+            </li>
+        </ul>
+    </div>
 </nav>
-<!-- Navbar -->
+
+</body>
+</html>

@@ -34,17 +34,17 @@ public class AdController {
      *
      * @return CollectionModel of the Ad EntityModel.
      */
-    @GetMapping("/")
+    @GetMapping("/all")
     public CollectionModel<EntityModel<Ad>> all() {
         List<EntityModel<Ad>> ads = this.repository.findAll().stream().map(this.assembler::toModel).collect(Collectors.toList());
-        return CollectionModel.of(ads, linkTo(methodOn(BasicAdController.class).all()).withSelfRel());
+        return CollectionModel.of(ads, linkTo(methodOn(AdController.class).all()).withSelfRel());
     }
 
     /**
      * Returns a specific Ad in repository, with HATEOAS links.
      *
      * @param id of an existing BasicAd
-     * @return BasicAd EntityModel.
+     * @return Ad EntityModel.
      */
     @GetMapping("/{id}")
     public EntityModel<Ad> one(@PathVariable String id) {

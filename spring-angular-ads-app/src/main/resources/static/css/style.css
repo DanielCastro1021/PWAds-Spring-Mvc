@@ -1,45 +1,97 @@
-html,
 body {
-  margin: 0;
-  padding: 0;
-  font-size: 10px;
-  font-family: sans-serif;
+    margin: 0;
+    font-family: "Lato", sans-serif;
+    height: max-content;
 }
 
-h1 {
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  height: 197px;
-  background: url(star-wars-logo.jpg) no-repeat center;
-}
-p {
-  padding: 20px;
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
 }
 
-section {
-  max-width: 640px;
-  margin: 0 auto;
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 10px;
 }
 
-figure,
-button {
-  width: 100%;
-  margin: 0;
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    margin: 10px;
 }
 
-img {
-  width: 100%;
-  box-shadow: 2px 2px 1px black;
+.double-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    margin: 10px;
 }
 
-caption {
-  display: block;
-  margin: 0 auto 1rem;
-  width: 70%;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  padding: 5px;
-  background: #ccc;
-  box-shadow: 1px 1px 1px black;
+@media screen and (min-width: 700px) {
+    .row {
+        margin-bottom: 0;
+    }
+
+    .column {
+        flex: 1
+    }
+
+    .double-column {
+        flex: 2
+    }
+
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Active/current link */
+.sidebar a.active {
+    background-color: #1266f1;
+    color: white;
+
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .sidebar a {
+        float: left;
+    }
+
+    div.content {
+        margin-left: 0;
+    }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
 }
