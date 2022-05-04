@@ -20,16 +20,37 @@
             <li id="ads-tab-button"><a href="/components/ads/list-ads.html">Ads</a></li>
             <li id="messages-tab-button"><a href="#">Messages</a></li>
         </ul>
-        <ul id="auth" class="nav navbar-nav navbar-right">
-            <li><a href="/components/authentication/register.html"><span class="glyphicon glyphicon-user"></span> Sign
+        <ul class="nav navbar-nav navbar-right">
+            <li id="register"><a href="/components/authentication/register.html"><span
+                    class="glyphicon glyphicon-user"></span> Sign
                 Up</a>
             </li>
-            <li><a href="/components/authentication/login.html"><span class="glyphicon glyphicon-log-in"></span>
+            <li id="login"><a href="/components/authentication/login.html"><span
+                    class="glyphicon glyphicon-log-in"></span>
                 Login</a>
+            </li>
+            <li id="logout" onclick="logout()"><a href="/components/authentication/login.html"><span
+                    class="glyphicon glyphicon-log-out"></span>
+                Logout</a>
             </li>
         </ul>
     </div>
 </nav>
+<script>
+    function logout() {
+        if (localStorage.length > 0) localStorage.clear();
+    }
+
+    if (localStorage.getItem("token") === null) {
+        $("#register").show();
+        $("#login").show();
+        $("#logout").hide();
+    } else {
+        $("#register").hide();
+        $("#login").hide();
+        $("#logout").show();
+    }
+</script>
 
 </body>
 </html>
