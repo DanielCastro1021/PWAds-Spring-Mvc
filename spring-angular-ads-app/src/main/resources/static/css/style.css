@@ -4,6 +4,9 @@ body {
     height: max-content;
 }
 
+a :hover{
+    cursor: pointer;
+}
 .center-screen {
     display: flex;
     justify-content: center;

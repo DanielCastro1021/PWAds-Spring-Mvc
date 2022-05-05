@@ -1,5 +1,6 @@
 const ads_api = '/api/ads';
 let ads = [];
+let ads_type;
 
 function loadNavBar() {
     $('#navbar').load('../util/navbar.html', () => {
@@ -7,28 +8,8 @@ function loadNavBar() {
     });
 }
 
-function getHtmlAdItem(ad) {
-    let htmlAdItem;
-    //Basic Ad
-    if (ad["title"] && ad["description"]) {
-        let title = "<h6>" + ad["title"] + "</h6>";
-        let description = "<p>" + ad["description"] + "</p>";
-        htmlAdItem = "<li class='list-group-item'>" + title + description + "</li>";
-    }
-
-    //Car Ad
-    if (ad["maker"] && ad["model"] && ad["year"]) {
-        let title = "<h6>" + ad["maker"] + " " + ad["model"] + "</h6>";
-        let description = "<p>" + "Car for sale: " + ad["maker"] + " " + ad["model"] + " of year " + ad["year"] + "</p>";
-        htmlAdItem = "<li class='list-group-item'>" + title + description + "</li>";
-    }
-
-    $('#ads-list').append(() => {
-        return $(htmlAdItem).click(() => {
-            window.location.href = `view-ad.html?id=${ad["id"]}`;
-
-        })
-    });
+function checkUserLogged() {
+    if (localStorage.length > 0 && localStorage.getItem("token") !== null) $("#my-ads-btn").show(); else $("#my-ads-btn").hide();
 }
 
 function transitionAdsList() {
@@ -37,10 +18,40 @@ function transitionAdsList() {
     $("#ads-list").fadeIn("slow");
 }
 
-function loadMyAdsList() {
-    transitionAdsList();
-    $('#all-ads-btn').addClass("active");
-    $('#list-ad-title').text("My Ads List");
+function getHtmlAdItem(ad) {
+    console.log(ad);
+    let $htmlAdItem = $('<li>').addClass("list-group-item list-group-item-action flex-column align-items-start").css("display", "grid");
+    let $title = $('<h4>');
+    let $description = $('<p>');
+    let $owner = $('<small>');
+    let $date = $('<small>');
+    let dateParsed = new Date(ad['createdDate']).toUTCString();
+    //Basic Ad
+    if (ad.hasOwnProperty("title")) {
+        $title.text(ad["title"]);
+        $description.text(ad["description"]);
+    } else
+        //Car Ad
+    if (ad.hasOwnProperty("maker")) {
+        $title.text(ad["maker"] + " " + ad["model"]);
+        $description.text("Car for sale: " + ad["maker"] + " " + ad["model"] + " of year " + ad["year"]);
+    }
+
+    $owner.text(`Submitted by: ${ad['owner']['username']}`)
+    $date.text(`Submitted at: ${dateParsed}`)
+    $htmlAdItem.append([$title, $description, $owner, $date]);
+    $htmlAdItem.click(() => {
+        window.location.href = `view-ad.html?id=${ad["id"]}`;
+
+    })
+    $('#ads-list').append($htmlAdItem);
+}
+
+function loadAdList() {
+    ads.forEach(getHtmlAdItem);
+}
+
+function loadMixedAdsList() {
     if (ads.hasOwnProperty("basicAdList") && ads.hasOwnProperty("carAdList")) {
         let shuffle_arr = ads['basicAdList'].concat(ads['carAdList']).sort();
         shuffle_arr.forEach(getHtmlAdItem);
@@ -51,32 +62,9 @@ function loadMyAdsList() {
     }
 }
 
-function loadCarAdsList() {
-    transitionAdsList();
-    $('#car-ads-btn').addClass("active");
-    $('#list-ad-title').text("All Car Ads List");
-    ads['carAdList'].forEach(getHtmlAdItem);
-}
-
-function loadBasicAdsList() {
-    transitionAdsList();
-    $('#basic-ads-btn').addClass("active");
-    $('#list-ad-title').text("All Basic Ads List");
-    ads['basicAdList'].forEach(getHtmlAdItem);
-}
-
-function loadAllAdsList() {
-    transitionAdsList();
-    $('#all-ads-btn').addClass("active");
-    $('#list-ad-title').text("All Ads List");
-    let shuffle_arr = ads['basicAdList'].concat(ads['carAdList']).sort();
-    shuffle_arr.forEach(getHtmlAdItem);
-}
-
 async function fetchMyAds() {
     let headers = {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("token")}`, // notice the Bearer before your token
+        'Content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}`, // notice the Bearer before your token
     }
     const options = {
         method: "GET", headers: headers
@@ -101,27 +89,64 @@ async function fetchAllAds() {
 function getMyAds() {
     fetchMyAds()
         .then((json) => {
-            ads = json['_embedded'];
-        }).then(loadMyAdsList);
+            ads = json['_embedded'] || [];
+        }).then(loadMixedAdsList);
+}
+
+function getCarAds() {
+    fetchAllAds()
+        .then((json) => {
+            ads = json['_embedded']['carAdList'] || [];
+        }).then(loadAdList);
 }
 
 function getBasicAds() {
-
+    fetchAllAds()
+        .then((json) => {
+            ads = json['_embedded']['basicAdList'] || [];
+        }).then(loadAdList);
 }
 
 function getAllAds() {
     fetchAllAds()
         .then((json) => {
-            ads = json['_embedded'];
-        }).then(loadAllAdsList);
+            ads = json['_embedded'] || [];
+        }).then(loadMixedAdsList);
 }
 
-function checkUserLogged() {
-    if (localStorage.length > 0 && localStorage.getItem("token") !== null) $("#my-ads-btn").show(); else $("#my-ads-btn").hide();
+function loadAds() {
+    transitionAdsList();
+    let title = $('#list-ad-title');
+    switch (ads_type) {
+        case 'all':
+            $('#all-ads-btn').addClass("active");
+            title.text("All Ads List");
+            getAllAds();
+            break;
+        case 'basic':
+            $('#basic-ads-btn').addClass("active");
+            title.text("All Basic Ads List");
+            getBasicAds();
+            break;
+        case 'car':
+            $('#car-ads-btn').addClass("active");
+            title.text("All Car Ads List");
+            getCarAds();
+            break;
+        case 'my_ads':
+            $('#my-ads-btn').addClass("active");
+            title.text("My Ads List");
+            getMyAds();
+            break;
+    }
+
 }
 
 window.onload = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    ads_type = urlParams.get('ads');
     checkUserLogged();
     loadNavBar();
-    getAllAds();
+    loadAds();
 };
