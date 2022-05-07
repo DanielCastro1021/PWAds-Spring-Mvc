@@ -4,7 +4,7 @@ let ads_type;
 
 function loadNavBar() {
     $('#navbar').load('../util/navbar.html', () => {
-        $('#ads-tab-button').toggleClass('active');
+        $('#dropdownMenuButton2').toggleClass('active');
     });
 }
 
@@ -67,7 +67,7 @@ async function fetchMyAds() {
         'Content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}`, // notice the Bearer before your token
     }
     const options = {
-        method: "GET", headers: headers
+        method: "GET", headers: new Headers(headers)
     };
     return await fetch(ads_api + "/personal", options)
         .then((response) => {

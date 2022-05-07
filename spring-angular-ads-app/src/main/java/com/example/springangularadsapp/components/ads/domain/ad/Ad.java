@@ -35,7 +35,7 @@ public abstract class Ad {
     @DBRef
     private User owner;
 
-    private List<Binary> imageList;
+    private List<String> imageList;
 
     public Ad() {
     }

@@ -9,10 +9,14 @@ import com.example.springangularadsapp.exceptions.UserNotFoundException;
 import com.example.springangularadsapp.components.ads.factory.AdFactory;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;
+import org.bson.types.Binary;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Component

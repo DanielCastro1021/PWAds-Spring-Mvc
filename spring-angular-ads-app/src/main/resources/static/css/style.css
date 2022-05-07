@@ -4,9 +4,16 @@ body {
     height: max-content;
 }
 
-a :hover{
+img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+a :hover {
     cursor: pointer;
 }
+
 .center-screen {
     display: flex;
     justify-content: center;

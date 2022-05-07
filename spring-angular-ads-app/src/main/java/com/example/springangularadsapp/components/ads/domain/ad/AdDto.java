@@ -1,9 +1,6 @@
 package com.example.springangularadsapp.components.ads.domain.ad;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.bson.types.Binary;
 
 import java.util.List;
@@ -11,7 +8,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Data
 public class AdDto {
-    private List<Binary> imageList;
+    private List<String> imageList;
     private String ownerUsername;
 }
