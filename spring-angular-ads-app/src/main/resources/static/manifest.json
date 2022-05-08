@@ -1,19 +1,19 @@
 {
   "id": "/",
   "start_url": "/",
-  "name": "PWA SW",
+  "name": "PWA Ads App",
+  "description": "A PWA Ads App developed by Daniel Castro.",
   "scope": "/",
   "gcm_sender_id": "370072803732",
-  "background_color": "#f69435",
+  "background_color": "#c63",
   "display": "standalone",
-  "theme_color": "#f69435",
+  "theme_color": "#c63",
   "lang": "en-US",
-  "short_name": "pwa-sw",
+  "short_name": "pwa-ads-app",
   "icons": [
     {
       "src": "./icons/windows11/SmallTile.scale-100.png",
-      "sizes": "71x71",
-      "purpose": "any maskable"
+      "sizes": "71x71"
     },
     {
       "src": "./icons/windows11/SmallTile.scale-125.png",

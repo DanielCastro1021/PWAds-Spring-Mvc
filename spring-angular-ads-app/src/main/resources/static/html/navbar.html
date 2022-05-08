@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 </head>
@@ -13,10 +12,10 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="../../index.html">WebSiteName</a>
+            <a class="navbar-brand" href="../index.html">PWAds</a>
         </div>
         <ul class="nav navbar-nav">
-            <li id="home-tab-button"><a href="../../index.html">Home</a></li>
+            <li id="home-tab-button"><a href="../index.html">Home</a></li>
 
             <li id="ads-tab-button" style="display: flex">
                 <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -52,7 +51,7 @@
                     class="glyphicon glyphicon-log-in"></span>
                 Login</a>
             </li>
-            <li id="logout" onclick="logout()"><a href="../../index.html"><span
+            <li id="logout" onclick="logout()"><a href="../index.html"><span
                     class="glyphicon glyphicon-log-out"></span>
                 Logout</a>
             </li>
@@ -60,23 +59,37 @@
     </div>
 </nav>
 <script>
-    function logout() {
-        if (localStorage.length > 0) localStorage.clear();
+    const token = localStorage.getItem("token");
+
+    function checkToken(token) {
+        if (token === null) {
+            logout();
+        } else {
+            const decode = JSON.parse(atob(token.split('.')[1]));
+            if (decode.exp * 1000 < new Date().getTime()) {
+                logout();
+            } else {
+                $("#register").hide();
+                $("#login").hide();
+                $("#messages-tab-button").show();
+                $("#my-ads-tab-button").show();
+                $("#logout").show();
+            }
+        }
     }
 
-    if (localStorage.getItem("token") === null) {
+
+    function logout() {
+        if (localStorage.length > 0) localStorage.clear();
         $("#register").show();
         $("#login").show();
         $("#logout").hide();
         $("#messages-tab-button").hide();
         $("#my-ads-tab-button").hide();
-    } else {
-        $("#register").hide();
-        $("#login").hide();
-        $("#messages-tab-button").show();
-        $("#my-ads-tab-button").show();
-        $("#logout").show();
     }
+
+    checkToken(token);
+
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

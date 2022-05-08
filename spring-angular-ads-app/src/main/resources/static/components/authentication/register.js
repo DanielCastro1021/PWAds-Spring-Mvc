@@ -29,7 +29,7 @@ document.body.addEventListener('submit', async function (event) {
 });
 
 function loadNavBar() {
-    $('#navbar').load('../util/navbar.html');
+    $('#navbar').load('../../html/navbar.html');
 }
 
 window.onload = () => {

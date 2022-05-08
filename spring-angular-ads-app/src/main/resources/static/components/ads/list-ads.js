@@ -3,7 +3,7 @@ let ads = [];
 let ads_type;
 
 function loadNavBar() {
-    $('#navbar').load('../util/navbar.html', () => {
+    $('#navbar').load('../../html/navbar.html', () => {
         $('#dropdownMenuButton2').toggleClass('active');
     });
 }
@@ -86,33 +86,40 @@ async function fetchAllAds() {
         });
 }
 
+function isAdsListEmpty() {
+    if (ads.length <= 0) {
+        $('#ads-list').append('<p>No ads were found.</p>');
+    }
+}
+
 function getMyAds() {
     fetchMyAds()
         .then((json) => {
             ads = json['_embedded'] || [];
-        }).then(loadMixedAdsList);
+        }).then(loadMixedAdsList).then(isAdsListEmpty);
 }
 
 function getCarAds() {
     fetchAllAds()
         .then((json) => {
             ads = json['_embedded']['carAdList'] || [];
-        }).then(loadAdList);
+        }).then(loadAdList).then(isAdsListEmpty);
 }
 
 function getBasicAds() {
     fetchAllAds()
         .then((json) => {
             ads = json['_embedded']['basicAdList'] || [];
-        }).then(loadAdList);
+        }).then(loadAdList).then(isAdsListEmpty);
 }
 
 function getAllAds() {
     fetchAllAds()
         .then((json) => {
             ads = json['_embedded'] || [];
-        }).then(loadMixedAdsList);
+        }).then(loadMixedAdsList).then(isAdsListEmpty);
 }
+
 
 function loadAds() {
     transitionAdsList();

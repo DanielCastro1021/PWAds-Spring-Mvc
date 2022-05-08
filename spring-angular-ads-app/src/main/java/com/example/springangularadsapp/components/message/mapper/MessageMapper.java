@@ -35,8 +35,8 @@ public class MessageMapper {
             Optional<User> from = this.userRepository.findByUsername(userDetails.getUsername());
             Optional<User> to = this.userRepository.findByUsername(dto.getTo());
             Optional<Ad> ad = this.adRepository.findById(dto.getAdId());
-            if (from.isEmpty() ) throw new UserNotFoundException(userDetails.getUsername());
-            else if(to.isEmpty()) throw new UserNotFoundException(dto.getTo());
+            if (from.isEmpty()) throw new UserNotFoundException(userDetails.getUsername());
+            else if (to.isEmpty()) throw new UserNotFoundException(dto.getTo());
             else if (ad.isEmpty()) throw new AdNotFoundException(dto.getAdId()); //FIXME: Message Build Error Exception
             else if (dto.getMessage() == null || dto.getMessage().isEmpty())
                 throw new AdNotFoundException("");  //FIXME: Message Build Error Exception
