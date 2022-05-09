@@ -7,6 +7,7 @@ document.body.addEventListener('submit', async function (event) {
     event.preventDefault();
     let username = $('#username').val();
     let password = $('#password').val();
+    let firebaseToken = localStorage.getItem("firebase-token");
 
     const options = {
         method: 'post',
@@ -15,6 +16,7 @@ document.body.addEventListener('submit', async function (event) {
     const body = {
         username: username,
         password: password,
+        firebaseToken: firebaseToken
     };
 
     options.body = JSON.stringify(body);
@@ -24,6 +26,7 @@ document.body.addEventListener('submit', async function (event) {
         .then((json) => {
             localStorage.setItem('token', json.token);
             localStorage.setItem('roles', json.roles);
+            localStorage.setItem('firebase-token', json.firebaseToken);
             window.location.href = '../../index.html';
         })
         .catch((error) => console.log(error));
@@ -33,14 +36,7 @@ function loadNavBar() {
     $('#navbar').load('../../html/navbar.html');
 }
 
-function loadUsername() {
-    if (localStorage.length > 0 && localStorage.getItem("temp_username") !== null) {
-        $("#username").val(localStorage.getItem("temp_username"));
-    }
-
-}
 
 window.onload = () => {
     loadNavBar();
-    loadUsername();
 }

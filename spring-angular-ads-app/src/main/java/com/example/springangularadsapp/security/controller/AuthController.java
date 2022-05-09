@@ -51,7 +51,6 @@ public class AuthController {
     }
 
     /**
-     *
      * @param loginRequest
      * @return
      */
@@ -65,12 +64,13 @@ public class AuthController {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+        User user = userRepository.findByUsername(userDetails.getUsername()).get();
+        user.setFirebaseToken(loginRequest.getFirebaseToken());
+        userRepository.save(user);
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles, user.getFirebaseToken()));
     }
 
     /**
-     *
      * @param signUpRequest
      * @return
      */

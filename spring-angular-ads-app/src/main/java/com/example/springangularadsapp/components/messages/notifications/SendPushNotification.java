@@ -34,8 +34,8 @@ public class SendPushNotification {
 
     @AfterReturning(value = "routeMessageControllerPointcut() && saveMessagePointcut()", returning = "entityModel")
     public void sendPushNotificationToUser(EntityModel<Message> entityModel) throws IOException, FirebaseMessagingException {
-        String topic = entityModel.getContent().getTo().getId();
-        logger.info("TOPIC====>" + topic);
-        firebaseMessagingService.sendMessageNotification(entityModel, topic);
+        String token = entityModel.getContent().getTo().getFirebaseToken();
+        logger.info("TOKEN====>" + token);
+        firebaseMessagingService.sendMessageNotification(entityModel, token);
     }
 }

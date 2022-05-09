@@ -1,4 +1,4 @@
-let imgSection = document.querySelector('section');
+let imgSection = $(".carousel-inner");
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
@@ -62,18 +62,10 @@ function loadAllImages() {
             function (arrayResponse) {
                 let myImage = document.createElement('img');
                 let myFigure = document.createElement('figure');
-                let myCaption = document.createElement('caption');
                 myImage.src = window.URL.createObjectURL(arrayResponse[0]);
                 myImage.setAttribute('alt', arrayResponse[1].alt);
-                myCaption.innerHTML =
-                    '<strong>' +
-                    arrayResponse[1].name +
-                    '</strong>: Taken by ' +
-                    arrayResponse[1].credit;
-
-                imgSection.appendChild(myFigure);
+                imgSection.append(myFigure);
                 myFigure.appendChild(myImage);
-                myFigure.appendChild(myCaption);
             },
             function (Error) {
                 console.log(Error);

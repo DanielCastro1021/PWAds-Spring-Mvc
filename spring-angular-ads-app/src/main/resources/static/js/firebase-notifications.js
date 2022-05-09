@@ -6,14 +6,17 @@ function requestPermission() {
             if ("serviceWorker" in navigator) {
 
                 navigator.serviceWorker.addEventListener('message', event => {
-                    localStorage.setItem("firebase-token", event.data);
+                    if (localStorage.getItem("firebase-token") === null)
+                        localStorage.setItem("firebase-token", event.data);
                 });
 
                 navigator.serviceWorker
                     .ready
                     .then(function (registration) {
-                        registration.active.postMessage("token");
-                        console.log("Registration successful, scope is:", registration.scope);
+                        if (localStorage.getItem("firebase-token") === null) {
+                            registration.active.postMessage("token");
+                            console.log("Registration successful, scope is:", registration.scope);
+                        }
                     })
                     .catch(function (err) {
                         console.log("Service worker registration failed, error:", err);
