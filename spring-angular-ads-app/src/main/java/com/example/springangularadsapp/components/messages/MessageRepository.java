@@ -1,8 +1,7 @@
-package com.example.springangularadsapp.components.message;
+package com.example.springangularadsapp.components.messages;
 
 import com.example.springangularadsapp.security.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 

@@ -29,19 +29,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!--JWT-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
-
+        <!--JWT-->
 
         <!--HATEOAS-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
+        <!--HATEOAS-->
 
         <!--AspectJ-->
         <dependency>
@@ -49,6 +51,7 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.9.1</version>
         </dependency>
+        <!--AspectJ-->
 
         <!--Swagger-->
         <dependency>
@@ -56,6 +59,7 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.7</version>
         </dependency>
+        <!--Swagger-->
 
         <!--Lombok-->
         <dependency>
@@ -63,6 +67,15 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--Lombok-->
+
+        <!--Firebase-->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>8.1.0</version>
+        </dependency>
+        <!--Firebase-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

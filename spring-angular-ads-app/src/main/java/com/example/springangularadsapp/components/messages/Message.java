@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.message;
+package com.example.springangularadsapp.components.messages;
 
 import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import com.example.springangularadsapp.security.models.User;

@@ -1,7 +1,7 @@
-package com.example.springangularadsapp.components.message.assembler;
+package com.example.springangularadsapp.components.messages.assembler;
 
-import com.example.springangularadsapp.components.message.controller.MessageController;
-import com.example.springangularadsapp.components.message.Message;
+import com.example.springangularadsapp.components.messages.controller.MessageController;
+import com.example.springangularadsapp.components.messages.Message;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;

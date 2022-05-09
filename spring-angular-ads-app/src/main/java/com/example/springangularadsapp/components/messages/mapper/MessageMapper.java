@@ -1,10 +1,10 @@
-package com.example.springangularadsapp.components.message.mapper;
+package com.example.springangularadsapp.components.messages.mapper;
 
 import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import com.example.springangularadsapp.components.ads.domain.ad.AdRepository;
-import com.example.springangularadsapp.components.message.Message;
-import com.example.springangularadsapp.components.message.MessageDto;
-import com.example.springangularadsapp.components.message.factory.MessageFactory;
+import com.example.springangularadsapp.components.messages.Message;
+import com.example.springangularadsapp.components.messages.MessageDto;
+import com.example.springangularadsapp.components.messages.factory.MessageFactory;
 import com.example.springangularadsapp.exceptions.AdNotFoundException;
 import com.example.springangularadsapp.exceptions.UserNotFoundException;
 import com.example.springangularadsapp.security.models.User;

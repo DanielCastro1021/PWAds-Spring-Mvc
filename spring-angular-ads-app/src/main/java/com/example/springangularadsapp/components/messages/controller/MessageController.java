@@ -1,11 +1,11 @@
-package com.example.springangularadsapp.components.message.controller;
+package com.example.springangularadsapp.components.messages.controller;
 
-import com.example.springangularadsapp.components.message.Message;
-import com.example.springangularadsapp.components.message.MessageDto;
-import com.example.springangularadsapp.components.message.MessageRepository;
-import com.example.springangularadsapp.components.message.assembler.MessageModelAssembler;
+import com.example.springangularadsapp.components.messages.Message;
+import com.example.springangularadsapp.components.messages.MessageDto;
+import com.example.springangularadsapp.components.messages.MessageRepository;
+import com.example.springangularadsapp.components.messages.assembler.MessageModelAssembler;
 
-import com.example.springangularadsapp.components.message.mapper.MessageMapper;
+import com.example.springangularadsapp.components.messages.mapper.MessageMapper;
 import com.example.springangularadsapp.exceptions.MessageNotFoundException;
 import com.example.springangularadsapp.constants.HateoasController;
 import com.example.springangularadsapp.security.authorization.annotation.AdminAccess;

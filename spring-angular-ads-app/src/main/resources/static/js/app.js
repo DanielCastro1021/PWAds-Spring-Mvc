@@ -2,6 +2,7 @@ let imgSection = document.querySelector('section');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
+        let register;
         navigator.serviceWorker
             .register('/sw.js', {scope: '/'})
             .then((reg) => {
@@ -17,7 +18,9 @@ if ('serviceWorker' in navigator) {
                 // registration failed
                 console.log('Registration failed with ' + error);
             });
+
     });
+
 }
 
 // function for loading each image via XHR
@@ -53,16 +56,7 @@ function imgLoad(imgJSON) {
     });
 }
 
-function loadNavBar() {
-    $('#navbar').load('../html/navbar.html', () => {
-        $('#home-tab-button').toggleClass('active');
-    });
-}
-
-window.onload = function () {
-    // load navbar
-    loadNavBar();
-    // load each set of image, alt text, name and caption
+function loadAllImages() {
     for (let i = 0; i <= Gallery.images.length - 1; i++) {
         imgLoad(Gallery.images[i]).then(
             function (arrayResponse) {
@@ -86,4 +80,17 @@ window.onload = function () {
             }
         );
     }
+}
+
+function loadNavBar() {
+    $('#navbar').load('../html/navbar.html', () => {
+        $('#home-tab-button').toggleClass('active');
+    });
+}
+
+window.onload = function () {
+    // load navbar
+    loadNavBar();
+    // load each set of image, alt text, name and caption
+    loadAllImages();
 };

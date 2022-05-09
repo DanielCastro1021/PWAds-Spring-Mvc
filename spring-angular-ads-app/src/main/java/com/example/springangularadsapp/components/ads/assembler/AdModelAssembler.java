@@ -5,7 +5,6 @@ import com.example.springangularadsapp.components.ads.domain.car_ad.controller.C
 import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
 import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
-import com.example.springangularadsapp.components.message.controller.MessageController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
