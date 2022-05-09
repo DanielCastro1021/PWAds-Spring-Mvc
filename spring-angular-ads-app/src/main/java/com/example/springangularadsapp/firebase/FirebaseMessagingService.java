@@ -29,8 +29,8 @@ public class FirebaseMessagingService {
         map.put("_links", model.getLinks().toString());
         Notification notification = Notification
                 .builder()
-                .setTitle("New message from:" + msg.getFrom().getUsername())
-                .setBody("Message:" + msg.getMessage())
+                .setTitle(msg.getFrom().getUsername())
+                .setBody(msg.getMessage())
                 .build();
 
         com.google.firebase.messaging.Message message = com.google.firebase.messaging.Message

@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,18 +25,15 @@ public class SendPushNotification {
         this.firebaseMessagingService = firebaseMessagingService;
     }
 
-    @Pointcut("within(com..messages.controller.MessageController)")
-    public void routeMessageControllerPointcut() {
-    }
 
-    @Pointcut("execution(* save(..))")
+    @Pointcut("execution(* com.example.springangularadsapp.components.messages.controller.MessageController.save(..))")
     public void saveMessagePointcut() {
     }
 
-    @AfterReturning(value = "routeMessageControllerPointcut() && saveMessagePointcut()", returning = "entityModel")
-    public void sendPushNotificationToUser(EntityModel<Message> entityModel) throws IOException, FirebaseMessagingException {
+    @AfterReturning(value = "saveMessagePointcut()", returning = "responseEntity")
+    public void sendPushNotificationToUser(ResponseEntity<?> responseEntity) throws IOException, FirebaseMessagingException {
+        EntityModel<Message> entityModel = (EntityModel<Message>) responseEntity.getBody();
         String token = entityModel.getContent().getTo().getFirebaseToken();
-        logger.info("TOKEN====>" + token);
         firebaseMessagingService.sendMessageNotification(entityModel, token);
     }
 }

@@ -13,7 +13,7 @@ let staticAssets = [
     'index.html',
     'css/style.css',
     'html/fallout.html', 'html/navbar.html',
-    'js/app.js', 'js/image-list.js',
+    'js/app.js', 'js/image-list.js', 'js/firebase-notifications.js',
     'icons/ios/100.png', 'icons/ios/144.png',
     'img/home-img-placeholder.png', 'img/broken-1.png',
     'components/ads/list-ads.html', 'components/ads/list-ads.js',
@@ -36,7 +36,6 @@ self.addEventListener('activation', (event) => {
             return caches.delete(cacheName);
         }
     }));
-    firebaseInit();
 });
 
 self.addEventListener('fetch', (event) => {
@@ -63,12 +62,21 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('push', (event) => {
-    const payload = event.data ? event.data.text() : 'no payload';
-    // Show a notification with title 'ServiceWorker ' and use the payload
-    // as the body.
-    event.waitUntil(self.registration.showNotification('ServiceWorker Push Notification', {
-        body: payload,
-    }));
+    let payload = event.data ? event.data.text() : 'no payload';
+    payload = JSON.parse(payload);
+    let username = payload.notification.title;
+    let message = payload.notification.body;
+
+    // Customize notification here
+    const notificationTitle = 'PWAds - New message received';
+    const notificationOptions = {
+        body: `The user ${username} sent you the following message: ${message}`,
+        icon: '/icons/ios/100.png',
+    };
+
+    self.registration.showNotification(notificationTitle,
+        notificationOptions);
+
 });
 
 // service-worker.js
@@ -97,30 +105,11 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
 // Initialize Firebase Cloud Messaging and get a reference to the service
 const messaging = firebase.messaging();
 
 
-function firebaseInit() {
-
-    messaging.onBackgroundMessage((payload) => {
-        console.log('[firebase-messaging-sw.js] Received background message ', payload);
-        // Customize notification here
-        const notificationTitle = 'Background Message Title';
-        const notificationOptions = {
-            body: 'Background Message body.',
-            icon: '/firebase-logo.png'
-        };
-
-        self.registration.showNotification(notificationTitle,
-            notificationOptions);
-    });
-
-}
-
 function getToken(event) {
-
     messaging.getToken({vapidKey: vapidKey, serviceWorkerRegistration: self.registration})
         .then((currentToken) => {
             if (currentToken) {

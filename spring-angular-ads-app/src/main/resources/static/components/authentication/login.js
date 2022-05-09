@@ -1,7 +1,5 @@
 const login_api_url = '/api/auth/login/';
 
-if (localStorage.getItem('token') !== null)
-    window.location.href = '../../index.html';
 
 document.body.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -24,12 +22,11 @@ document.body.addEventListener('submit', async function (event) {
     await fetch(login_api_url, options)
         .then((response) => response.json())
         .then((json) => {
-            localStorage.setItem('token', json.token);
-            localStorage.setItem('roles', json.roles);
-            localStorage.setItem('firebase-token', json.firebaseToken);
+            localStorage.setItem('token', json['token']);
+            localStorage.setItem('roles', json['roles']);
+            localStorage.setItem('firebase-token', json['firebaseToken']);
             window.location.href = '../../index.html';
-        })
-        .catch((error) => console.log(error));
+        });
 });
 
 function loadNavBar() {

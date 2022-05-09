@@ -2,7 +2,7 @@ const msg_api = '/api/messages';
 let msg_type;
 
 function loadNavBar() {
-    $('#navbar').load('../util/navbar.html', () => {
+    $('#navbar').load('../../html/navbar.html', () => {
         $('#messages-tab-button').toggleClass('active');
     });
 }
