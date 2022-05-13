@@ -9,64 +9,76 @@ let externalAssets = [
 ];
 
 let staticAssets = [
-    'manifest.json',
-    'index.html',
-    'css/style.css',
-    'html/fallout.html', 'html/navbar.html',
-    'js/app.js', 'js/image-list.js', 'js/firebase-notifications.js',
-    'icons/ios/100.png', 'icons/ios/144.png',
-    'img/home-img-placeholder.png', 'img/broken-1.png',
-    'components/ads/list-ads.html', 'components/ads/list-ads.js',
-    'components/authentication/login.html', 'components/authentication/login.js',
-    'components/authentication/register.html', 'components/authentication/register.js'
+    '/manifest.json',
+    '/index.html',
+    '/css/style.css',
+    '/html/fallout.html',
+    '/html/navbar.html',
+    '/js/app.js',
+    '/js/image-list.js',
+    '/js/firebase-notifications.js',
+    '/icons/ios/100.png',
+    '/icons/ios/144.png',
+    '/img/home-img-placeholder.png',
+    '/img/broken-1.png',
+    '/components/ads/list-ads.html',
+    '/components/ads/list-ads.js',
+    '/components/ads/list-ads.html?ads=all',
+    '/components/ads/list-ads.html?ads=basic',
+    '/components/ads/list-ads.html?ads=car',
+    '/components/authentication/login.html',
+    '/components/authentication/login.js',
+    '/components/authentication/register.html',
+    '/components/authentication/register.js'
 ];
 
 staticAssets.concat(externalAssets);
+console.log(staticAssets)
 
 self.addEventListener('install', (event) => {
+    // Precache assets on install
     event.waitUntil(caches.open(CACHE_NAME).then((cache) => {
         return cache.addAll(staticAssets);
     }));
 });
 
-self.addEventListener('activation', (event) => {
-    let cacheAllowList = [CACHE_NAME];
-    event.waitUntil(caches.forEach((cache, cacheName) => {
-        if (cacheAllowList.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-        }
-    }));
+self.addEventListener('activate', (event) => {
+    event.waitUntil((async () => {
+        const cacheNames = await caches.keys();
+
+        await Promise.all(cacheNames.map(async (cacheName) => {
+            if (CACHE_NAME !== cacheName) {
+                await caches.delete(cacheName);
+            }
+        }));
+    })());
 });
 
-
 self.addEventListener('fetch', (event) => {
-    event.respondWith((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        try {
+    event.respondWith(caches.open(CACHE_NAME).then((cache) => {
+        // Go to the cache first
+        return cache.match(event.request.url).then((cachedResponse) => {
+            // Return a cached response if we have one
             if (event.request.method !== "GET") {
                 return Promise.reject('no-match')
             }
 
-            const fetchResponse = await fetch(event.request);
-            if (fetchResponse) {
-                console.log('fetchResponse: ', event.request.url);
-                cache.put(event.request, fetchResponse.clone());
-                return fetchResponse;
-            }
-
-            const cachedResponse = await cache.match(event.request);
             if (cachedResponse) {
-                console.log('cachedResponse: ', event.request.url);
                 return cachedResponse;
             }
 
-            //your request
-        } catch (error) {
-            console.log('Fetch failed: ', error);
+            // Otherwise, hit the network
+            return fetch(event.request).then((fetchedResponse) => {
+                // Add the network response to the cache for later visits
+                cache.put(event.request, fetchedResponse.clone());
 
-        }
-    })());
+                // Return the network response
+                return fetchedResponse;
+            });
+        });
+    }));
 });
+
 
 self.addEventListener('push', (event) => {
     let payload = event.data ? event.data.text() : 'no payload';

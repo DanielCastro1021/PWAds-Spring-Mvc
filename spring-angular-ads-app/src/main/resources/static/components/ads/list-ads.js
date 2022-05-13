@@ -93,6 +93,8 @@ async function fetchMyAds() {
     return await fetch(ads_api + "/personal", options)
         .then((response) => {
             return response.json();
+        }).catch(err => {
+            return [];
         });
 }
 
@@ -104,6 +106,8 @@ async function fetchAllAds() {
     return await fetch(ads_api + "/all", options)
         .then((response) => {
             return response.json();
+        }).catch(err => {
+            return [];
         });
 }
 
@@ -123,14 +127,16 @@ function getMyAds() {
 function getCarAds() {
     fetchAllAds()
         .then((json) => {
-            ads = json['_embedded']['carAdList'] || [];
+            ads = json['_embedded'] || [];
+            if (ads.hasOwnProperty("carAdList")) ads = ads['carAdList'];
         }).then(loadAdList).then(isAdsListEmpty);
 }
 
 function getBasicAds() {
     fetchAllAds()
         .then((json) => {
-            ads = json['_embedded']['basicAdList'] || [];
+            ads = json['_embedded'] || [];
+            if (ads.hasOwnProperty("basicAdList")) ads = ads['basicAdList'];
         }).then(loadAdList).then(isAdsListEmpty);
 }
 
