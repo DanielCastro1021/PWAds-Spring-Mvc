@@ -38,25 +38,32 @@ self.addEventListener('activation', (event) => {
     }));
 });
 
+
 self.addEventListener('fetch', (event) => {
     event.respondWith((async () => {
         const cache = await caches.open(CACHE_NAME);
         try {
+            if (event.request.method !== "GET") {
+                return Promise.reject('no-match')
+            }
+
+            const fetchResponse = await fetch(event.request);
+            if (fetchResponse) {
+                console.log('fetchResponse: ', event.request.url);
+                cache.put(event.request, fetchResponse.clone());
+                return fetchResponse;
+            }
+
             const cachedResponse = await cache.match(event.request);
             if (cachedResponse) {
                 console.log('cachedResponse: ', event.request.url);
                 return cachedResponse;
             }
 
-            const fetchResponse = await fetch(event.request);
-            if (fetchResponse) {
-                console.log('fetchResponse: ', event.request.url);
-                await cache.put(event.request, fetchResponse.clone());
-                return fetchResponse;
-            }
+            //your request
         } catch (error) {
             console.log('Fetch failed: ', error);
-            return await cache.match('./html/fallout.html');
+
         }
     })());
 });
@@ -74,8 +81,7 @@ self.addEventListener('push', (event) => {
         icon: '/icons/ios/100.png',
     };
 
-    self.registration.showNotification(notificationTitle,
-        notificationOptions);
+    self.registration.showNotification(notificationTitle, notificationOptions);
 
 });
 

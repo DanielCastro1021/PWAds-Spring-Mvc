@@ -6,6 +6,27 @@ let ad_view_div = $("#ad-view");
 let basicAdForm = $("#basic-ad-form");
 let carAdForm = $("#car-ad-form");
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker
+            .register('../../sw.js', {scope: '../../'})
+            .then((reg) => {
+                if (reg.installing) {
+                    console.log('Service worker installing');
+                } else if (reg.waiting) {
+                    console.log('Service worker installed');
+                } else if (reg.active) {
+                    console.log('Service worker active');
+                }
+            })
+            .catch(function (error) {
+                // registration failed
+                console.log('Registration failed with ' + error);
+            });
+
+    });
+}
+
 async function fetchSaveMessage(msg) {
     let headers = {
         'Content-type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem("token")}`, // notice the Bearer before your token
@@ -15,8 +36,12 @@ async function fetchSaveMessage(msg) {
     };
     options.body = JSON.stringify(msg);
     return await fetch(msg_api + "/", options)
-        .then((response) => {
-            return response.json();
+        .then(response => {
+            if (response.status !== 200) {
+                throw new Error("Not 200 response")
+            } else return (response.json());
+        }).catch(error => {
+            console.log(error)
         });
 }
 
@@ -99,17 +124,23 @@ function checkUserLogged() {
 }
 
 function checkOwner() {
-    const token = localStorage.getItem("token");
-    const decode = JSON.parse(atob(token.split('.')[1]));
     const actions = $("#owner-actions");
     const messagePanel = $("#ad-message-panel");
-    if (decode.sub === current_ad['owner']['username']) {
-        actions.show();
-        messagePanel.hide();
+    const token = localStorage.getItem("token");
+    if (token) {
+        const decode = JSON.parse(atob(token.split('.')[1]));
 
+        if (decode.sub === current_ad['owner']['username']) {
+            actions.show();
+            messagePanel.hide();
+
+        } else {
+            actions.hide();
+            messagePanel.show();
+        }
     } else {
         actions.hide();
-        messagePanel.show();
+        messagePanel.hide();
     }
 }
 
@@ -139,14 +170,13 @@ async function fetchUpdateAd() {
         method: "PUT", headers: new Headers(headers)
     };
     options.body = JSON.stringify(current_ad);
-    return await fetch(current_ad['_links']['self']['href'], options).then((response) => {
-        if (response.ok) {
-            return response
-        }
-        throw new Error('Something went wrong');
-    }).then((response) => {
-        return response.json();
-    }).catch(err => window.location.href = "../../html/fallout.html");
+    return await fetch(current_ad['_links']['self']['href'], options).then(response => {
+        if (response.status !== 200) {
+            throw new Error("Not 200 response")
+        } else return (response.json());
+    }).catch(error => {
+        console.log(error)
+    });
 }
 
 async function fetchAd(id) {
@@ -156,14 +186,14 @@ async function fetchAd(id) {
     const options = {
         method: "GET", headers: new Headers(headers)
     };
-    return await fetch(ads_api + "/" + id, options).then((response) => {
-        if (response.ok) {
-            return response
-        }
-        throw new Error('Something went wrong');
-    }).then((response) => {
-        return response.json();
-    }).catch(err => window.location.href = "../../html/fallout.html");
+    return await fetch(ads_api + "/" + id, options).then(response => {
+        if (response.status !== 200) {
+            throw new Error("Not 200 response")
+        } else return (response.json());
+    }).catch(error => {
+        window.location.replace("http://localhost:8080/fallout.html")
+        console.log(error)
+    });
 }
 
 async function getImgArrBinary(arr) {

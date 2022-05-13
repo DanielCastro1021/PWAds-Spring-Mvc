@@ -4,12 +4,10 @@ function requestPermission() {
         if (permission === 'granted') {
             console.log('Notification permission granted.');
             if ("serviceWorker" in navigator) {
-
                 navigator.serviceWorker.addEventListener('message', event => {
                     if (localStorage.getItem("firebase-token") === null)
                         localStorage.setItem("firebase-token", event.data);
                 });
-
                 navigator.serviceWorker
                     .ready
                     .then(function (registration) {
@@ -28,9 +26,5 @@ function requestPermission() {
     });
     // [END messaging_request_permission]
 }
-
-requestPermission();
-
-
 
 
