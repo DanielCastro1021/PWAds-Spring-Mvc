@@ -66,11 +66,11 @@ self.addEventListener('fetch', (event) => {
       // Go to the cache first
       return cache.match(event.request.url).then((cachedResponse) => {
         // Return a cached response if we have one
-        if (event.request.method !== 'GET') {
-          return Promise.reject('no-match');
-        }
 
         if (cachedResponse) {
+          if (event.request.method !== 'GET') {
+            return Promise.reject('no-match');
+          }
           return cachedResponse;
         }
         // Otherwise, hit the network

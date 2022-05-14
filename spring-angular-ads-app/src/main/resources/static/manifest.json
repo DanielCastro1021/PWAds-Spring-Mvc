@@ -5,9 +5,9 @@
   "description": "A PWA Ads App developed by Daniel Castro.",
   "scope": "/",
   "gcm_sender_id": "370072803732",
-  "background_color": "#c63",
+  "background_color": "#ee8d32",
   "display": "standalone",
-  "theme_color": "#c63",
+  "theme_color": "#ee8d32",
   "lang": "en-US",
   "short_name": "pwa-ads-app",
   "icons": [
