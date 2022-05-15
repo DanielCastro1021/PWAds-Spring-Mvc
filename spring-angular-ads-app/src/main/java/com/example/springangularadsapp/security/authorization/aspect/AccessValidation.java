@@ -1,6 +1,6 @@
 package com.example.springangularadsapp.security.authorization.aspect;
 
-import com.example.springangularadsapp.security.exception.AccessValidationException;
+import com.example.springangularadsapp.security.exception.UnauthorizedAccessException;
 import com.example.springangularadsapp.security.models.ERole;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -36,30 +36,26 @@ public class AccessValidation {
     public void methodsWithUserAccessAnnotation() {
     }
 
-    @Pointcut("within(com.example.springangularadsapp.security.controller.TestController)")
-    public void testControllerMethods() {
-    }
 
-    @Around(value = "methodsWithAdminAccessAnnotation() && testControllerMethods()")
+    @Around(value = "methodsWithAdminAccessAnnotation()")
     public Object checkAdminPrivileges(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        if (!request.isUserInRole("ROLE_ADMIN")) throw new AccessValidationException(ERole.ROLE_ADMIN);
+        if (!request.isUserInRole("ROLE_ADMIN")) throw new UnauthorizedAccessException(ERole.ROLE_ADMIN);
         else return proceedingJoinPoint.proceed();
     }
 
-    @Around(value = "methodsWithModeratorAccessAnnotation() && testControllerMethods()")
+    @Around(value = "methodsWithModeratorAccessAnnotation()")
     public Object checkModeratorPrivileges(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        if (!request.isUserInRole("ROLE_MODERATOR")) throw new AccessValidationException(ERole.ROLE_ADMIN);
+        if (!request.isUserInRole("ROLE_MODERATOR")) throw new UnauthorizedAccessException(ERole.ROLE_MODERATOR);
         else return proceedingJoinPoint.proceed();
-
     }
 
-    @Around(value = "methodsWithUserAccessAnnotation() && testControllerMethods()")
+    @Around(value = "methodsWithUserAccessAnnotation()")
     public Object checkUserPrivileges(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         if (request.isUserInRole("ROLE_USER") || request.isUserInRole("ROLE_MODERATOR") || request.isUserInRole("ROLE_ADMIN"))
             return proceedingJoinPoint.proceed();
-        else throw new AccessValidationException(ERole.ROLE_USER);
+        else throw new UnauthorizedAccessException(ERole.ROLE_USER);
     }
 }

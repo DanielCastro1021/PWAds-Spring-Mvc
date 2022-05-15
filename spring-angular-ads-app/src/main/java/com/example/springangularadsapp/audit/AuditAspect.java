@@ -27,11 +27,10 @@ public class AuditAspect {
     }
 
     @Around(value = "allMethodsInAComponentsControllerPackage()")
-    public Object profileExecutionTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object endpointAudit(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         Object result = proceedingJoinPoint.proceed();
         long elapsedTime = System.currentTimeMillis() - start;
-
         String requestId = UUID.randomUUID().toString();
         String className = proceedingJoinPoint.getSignature().getDeclaringTypeName();
         String methodName = proceedingJoinPoint.getSignature().getName();
