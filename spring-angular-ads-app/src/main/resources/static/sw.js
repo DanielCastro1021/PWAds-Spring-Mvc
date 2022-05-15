@@ -7,6 +7,7 @@ let externalAssets = [
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
     'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js',
     'https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js',
+    'https://www.gstatic.com/firebasejs/6.6.2/firebase-messaging.js',
     'https://unpkg.com/sweetalert/dist/sweetalert.min.js',
 ];
 
@@ -38,7 +39,8 @@ self.addEventListener('install', (event) => {
     // Precache assets on install
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            staticAssets.concat(externalAssets);
+            staticAssets = staticAssets.concat(externalAssets);
+            console.log(staticAssets);
             return cache.addAll(staticAssets);
         })
     );
