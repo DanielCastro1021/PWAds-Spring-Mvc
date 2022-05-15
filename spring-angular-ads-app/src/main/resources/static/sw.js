@@ -66,7 +66,6 @@ self.addEventListener('fetch', (event) => {
             // Go to the cache first
             return cache.match(event.request.url).then((cachedResponse) => {
                 // Return a cached response if we have one
-
                 if (cachedResponse) {
                     if (event.request.method !== 'GET') {
                         return Promise.reject('no-match');

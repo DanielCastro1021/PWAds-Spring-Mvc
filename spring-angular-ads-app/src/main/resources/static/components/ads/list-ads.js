@@ -129,20 +129,18 @@ async function fetchAllAds() {
         });
 }
 
-function isAdsListEmpty() {
-    if (ads.length <= 0) {
-        $('#ads-list').append('<p>No ads were found.</p>');
-        throw Error("Empty ads lists!");
-    }
-}
 
 function getMyAds() {
     fetchMyAds()
         .then((json) => {
-            ads = json['_embedded'] || [];
+            if (json.hasOwnProperty('_embedded')) ads = json['_embedded'];
+            else {
+                $('#ads-list').append('<p>No ads were found.</p>');
+                reject("Empty ads lists!");
+            }
         })
         .then(loadMixedAdsList)
-        .then(isAdsListEmpty);
+        .catch(err => console.log(err));
 }
 
 function getCarAds() {
@@ -152,10 +150,11 @@ function getCarAds() {
             if (ads.hasOwnProperty('carAdList')) ads = ads['carAdList'];
             else {
                 $('#ads-list').append('<p>No ads were found.</p>');
-                reject(new Error("Empty ads lists!"));
+                reject("Empty ads lists!");
             }
         })
-        .then(loadAdList);
+        .then(loadAdList)
+        .catch(err => console.log(err));
 }
 
 function getBasicAds() {
@@ -165,10 +164,11 @@ function getBasicAds() {
             if (ads.hasOwnProperty('basicAdList')) ads = ads['basicAdList'];
             else {
                 $('#ads-list').append('<p>No ads were found.</p>');
-                reject(new Error("Empty ads lists!"));
+                reject("Empty ads lists!");
             }
         })
-        .then(loadAdList);
+        .then(loadAdList)
+        .catch(err => console.log(err));
 }
 
 function getAllAds() {
@@ -177,10 +177,11 @@ function getAllAds() {
             ads = json['_embedded'] || [];
             if (!ads.hasOwnProperty('basicAdList') && !ads.hasOwnProperty('carAdList')) {
                 $('#ads-list').append('<p>No ads were found.</p>');
-                reject(new Error("Empty ads lists!"));
+                reject("Empty ads lists!");
             }
         })
-        .then(loadMixedAdsList);
+        .then(loadMixedAdsList)
+        .catch(err => console.log(err));
 }
 
 function loadAds() {

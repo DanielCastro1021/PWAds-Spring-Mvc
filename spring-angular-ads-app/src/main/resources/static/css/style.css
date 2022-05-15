@@ -84,7 +84,7 @@ li > * :hover {
 
 /* Active/current link */
 .sidebar a.active {
-    background-color: #1266f1;
+    background-color: #ee8d32;
     color: white;
 }
 
@@ -176,7 +176,7 @@ li > * :hover {
 
 .footer-32892 .quick-info li .icon {
     font-size: 20px;
-    color: #f88020;
+    color: #ee8d32;
 }
 
 .footer-32892 .subscribe {
@@ -216,7 +216,7 @@ li > * :hover {
 }
 
 .footer-32892 .subscribe .btn-submit {
-    background: #f88020;
+    background:  #ee8d32;
     height: 47px;
     border-radius: 30px;
     padding-left: 30px;
