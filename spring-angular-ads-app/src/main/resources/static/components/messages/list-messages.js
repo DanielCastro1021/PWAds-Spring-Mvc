@@ -1,33 +1,15 @@
 const msg_api = '/api/messages';
 let msg_type;
-
+let msg_list=  $('#msg-list');
 function loadNavBar() {
   $('#navbar').load('../../html/navbar.html', () => {
     $('#messages-tab-button').toggleClass('active');
   });
 }
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker
-      .register('../../sw.js', { scope: '../../' })
-      .then((reg) => {
-        if (reg.installing) {
-          console.log('Service worker installing');
-        } else if (reg.waiting) {
-          console.log('Service worker installed');
-        } else if (reg.active) {
-          console.log('Service worker active');
-        }
-      })
-      .catch(function (error) {
-        // registration failed
-        console.log('Registration failed with ' + error);
-      });
-  });
-}
+
 function transitionMessageList() {
   $('#sidebar>a.active').removeClass('active');
-  $('#msg-list').empty();
+ msg_list.empty();
   if (msg_type === 'sent') {
     $('#sent-msg-btn').addClass('active');
     $('#list-msg-title').text('Sent Messages').fadeIn('slow');
@@ -35,7 +17,7 @@ function transitionMessageList() {
     $('#received-msg-btn').addClass('active');
     $('#list-msg-title').text('Received Messages').fadeIn('slow');
   }
-  $('#msg-list').fadeIn('slow');
+  msg_list.fadeIn('slow');
 }
 
 function getAdHtmlItem(ad) {

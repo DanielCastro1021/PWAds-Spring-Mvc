@@ -2,25 +2,6 @@ const ads_api = '/api/ads';
 let ads = [];
 let ads_type;
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-        navigator.serviceWorker
-            .register('../../sw.js', {scope: '../../'})
-            .then((reg) => {
-                if (reg.installing) {
-                    console.log('Service worker installing');
-                } else if (reg.waiting) {
-                    console.log('Service worker installed');
-                } else if (reg.active) {
-                    console.log('Service worker active');
-                }
-            })
-            .catch(function (error) {
-                // registration failed
-                console.log('Registration failed with ' + error);
-            });
-    });
-}
 
 function loadNavBar() {
     $('#navbar').load('../../html/navbar.html', () => {

@@ -1,6 +1,8 @@
 const login_api_url = '/api/auth/login/';
 
 if ('serviceWorker' in navigator) {
+
+    //Try to install SW if not ready
     window.addEventListener('load', function () {
         navigator.serviceWorker
             .register('../../sw.js', {scope: '../../'})
@@ -19,6 +21,7 @@ if ('serviceWorker' in navigator) {
                 console.log('Registration failed with ' + error);
             });
     });
+
 }
 
 async function postLogin(user) {
