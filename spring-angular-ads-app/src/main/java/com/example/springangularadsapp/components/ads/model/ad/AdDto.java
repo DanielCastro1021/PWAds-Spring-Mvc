@@ -1,7 +1,6 @@
-package com.example.springangularadsapp.components.ads.domain.ad;
+package com.example.springangularadsapp.components.ads.model.ad;
 
 import lombok.*;
-import org.bson.types.Binary;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package com.example.springangularadsapp.components.ads.assembler;
 
-import com.example.springangularadsapp.components.ads.domain.basic_ad.controller.BasicAdController;
-import com.example.springangularadsapp.components.ads.domain.car_ad.controller.CarAdController;
-import com.example.springangularadsapp.components.ads.domain.ad.Ad;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
+import com.example.springangularadsapp.components.ads.controller.BasicAdController;
+import com.example.springangularadsapp.components.ads.controller.CarAdController;
+import com.example.springangularadsapp.components.ads.model.ad.Ad;
+import com.example.springangularadsapp.components.ads.model.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.model.car_ad.CarAd;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;

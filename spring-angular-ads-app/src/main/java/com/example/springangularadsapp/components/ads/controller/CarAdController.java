@@ -1,14 +1,13 @@
-package com.example.springangularadsapp.components.ads.domain.car_ad.controller;
+package com.example.springangularadsapp.components.ads.controller;
 
 import com.example.springangularadsapp.components.ads.assembler.AdModelAssembler;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAdDto;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAdRepository;
+import com.example.springangularadsapp.components.ads.repository.AdRepository;
+import com.example.springangularadsapp.components.ads.model.car_ad.CarAd;
+import com.example.springangularadsapp.components.ads.model.car_ad.CarAdDto;
 import com.example.springangularadsapp.components.ads.mapper.AdMapper;
 import com.example.springangularadsapp.exceptions.UserNotFoundException;
 import com.example.springangularadsapp.security.authorization.annotation.UserAccess;
 import com.example.springangularadsapp.exceptions.AdNotFoundException;
-import com.example.springangularadsapp.constants.HateoasController;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;
 import org.springframework.hateoas.CollectionModel;
@@ -32,16 +31,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/ads/cars")
-public class CarAdController implements HateoasController<CarAd, CarAdDto> {
-    private final CarAdRepository repository;
-    private final UserRepository userRepository;
-    private final AdModelAssembler<CarAd> assembler;
+public class CarAdController extends AdHateoasController<CarAd, CarAdDto> {
+
     private final AdMapper mapper;
 
-    public CarAdController(CarAdRepository repository, UserRepository userRepository, AdModelAssembler<CarAd> assembler, AdMapper mapper) {
-        this.repository = repository;
-        this.userRepository = userRepository;
-        this.assembler = assembler;
+    public CarAdController(AdRepository<CarAd> repository, UserRepository userRepository, AdModelAssembler<CarAd> assembler, AdMapper mapper) {
+        super(repository, assembler, userRepository);
         this.mapper = mapper;
     }
 
@@ -52,7 +47,7 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
      */
     @GetMapping("/")
     public CollectionModel<EntityModel<CarAd>> all() {
-        List<EntityModel<CarAd>> ads = this.repository.findAll().stream().map(this.assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<CarAd>> ads = super.getRepository().findAll().stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(CarAdController.class).all()).withSelfRel());
     }
 
@@ -64,8 +59,8 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
      */
     @GetMapping("/{id}")
     public EntityModel<CarAd> one(@PathVariable String id) {
-        CarAd carAd = this.repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
-        return this.assembler.toModel(carAd);
+        CarAd carAd = super.getRepository().findById(id).orElseThrow(() -> new AdNotFoundException(id));
+        return super.getAssembler().toModel(carAd);
     }
 
     /**
@@ -78,7 +73,7 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
     @UserAccess
     @PostMapping("/")
     public ResponseEntity<?> save(@RequestBody CarAdDto newEntity) throws UserNotFoundException {
-        EntityModel<CarAd> entityModel = this.assembler.toModel(this.repository.save(this.mapper.carAdDtoToCarAd(newEntity)));
+        EntityModel<CarAd> entityModel = super.getAssembler().toModel(super.getRepository().save(this.mapper.carAdDtoToCarAd(newEntity)));
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
@@ -101,19 +96,19 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
             throw new AdNotFoundException(userDetails.getUsername(), "doesn't own this ad:" + newAd);
         else {
 
-            CarAd updatedAd = this.repository.findById(id).map(carAd -> {
+            CarAd updatedAd = super.getRepository().findById(id).map(carAd -> {
                 carAd.setMaker(newAd.getMaker());
                 carAd.setModel(newAd.getModel());
                 carAd.setYear(newAd.getYear());
                 carAd.setOwner(newAd.getOwner());
                 carAd.setImageList(newAd.getImageList());
-                return repository.save(carAd);
+                return super.getRepository().save(carAd);
             }).orElseGet(() -> {
                 newAd.setId(id);
-                return this.repository.save(newAd);
+                return super.getRepository().save(newAd);
             });
 
-            EntityModel<CarAd> entityModel = this.assembler.toModel(updatedAd);
+            EntityModel<CarAd> entityModel = super.getAssembler().toModel(updatedAd);
             return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
         }
     }
@@ -126,12 +121,12 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        CarAd ad = this.repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
+        CarAd ad = super.getRepository().findById(id).orElseThrow(() -> new AdNotFoundException(id));
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
         if (ad.checkOwner(userDetails.getUsername()) || request.isUserInRole("ROLE_ADMIN")) {
-            this.repository.deleteById(id);
+            super.getRepository().deleteById(id);
             return ResponseEntity.noContent().build();
         } else throw new AdNotFoundException(userDetails.getUsername(), "doesn't own this ad:" + ad);
 
@@ -146,8 +141,8 @@ public class CarAdController implements HateoasController<CarAd, CarAdDto> {
     @GetMapping("/personal")
     public CollectionModel<EntityModel<CarAd>> getMyCarAds() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<User> user = this.userRepository.findByUsername(userDetails.getUsername());
-        List<EntityModel<CarAd>> ads = this.repository.findByOwner(user.get()).stream().map(this.assembler::toModel).collect(Collectors.toList());
+        Optional<User> user = super.getUserRepository().findByUsername(userDetails.getUsername());
+        List<EntityModel<CarAd>> ads = super.getRepository().findByOwner(user.get()).stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(CarAdController.class).all()).withSelfRel());
     }
 }

@@ -1,22 +1,18 @@
 package com.example.springangularadsapp.components.ads.mapper;
 
 
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAdDto;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAd;
-import com.example.springangularadsapp.components.ads.domain.car_ad.CarAdDto;
+import com.example.springangularadsapp.components.ads.model.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.model.basic_ad.BasicAdDto;
+import com.example.springangularadsapp.components.ads.model.car_ad.CarAd;
+import com.example.springangularadsapp.components.ads.model.car_ad.CarAdDto;
 import com.example.springangularadsapp.exceptions.UserNotFoundException;
 import com.example.springangularadsapp.components.ads.factory.AdFactory;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;
-import org.bson.types.Binary;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
 import java.util.Optional;
 
 @Component

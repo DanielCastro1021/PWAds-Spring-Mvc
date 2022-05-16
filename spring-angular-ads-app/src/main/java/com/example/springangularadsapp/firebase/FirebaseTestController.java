@@ -1,16 +1,14 @@
 package com.example.springangularadsapp.firebase;
 
-import com.example.springangularadsapp.components.messages.Message;
+import com.example.springangularadsapp.components.messages.model.Message;
 import com.example.springangularadsapp.components.messages.assembler.MessageModelAssembler;
 import com.example.springangularadsapp.security.authorization.annotation.UserAccess;
 import com.example.springangularadsapp.security.models.User;
 import com.google.firebase.messaging.FirebaseMessagingException;
-import lombok.Data;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/firebase")

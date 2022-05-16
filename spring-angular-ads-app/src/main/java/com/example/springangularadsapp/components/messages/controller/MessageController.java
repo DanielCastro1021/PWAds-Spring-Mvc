@@ -1,13 +1,13 @@
 package com.example.springangularadsapp.components.messages.controller;
 
-import com.example.springangularadsapp.components.messages.Message;
-import com.example.springangularadsapp.components.messages.MessageDto;
-import com.example.springangularadsapp.components.messages.MessageRepository;
+import com.example.springangularadsapp.components.messages.model.Message;
+import com.example.springangularadsapp.components.messages.model.MessageDto;
+import com.example.springangularadsapp.components.messages.repository.MessageRepository;
 import com.example.springangularadsapp.components.messages.assembler.MessageModelAssembler;
 
 import com.example.springangularadsapp.components.messages.mapper.MessageMapper;
 import com.example.springangularadsapp.exceptions.MessageNotFoundException;
-import com.example.springangularadsapp.constants.HateoasController;
+import com.example.springangularadsapp.controller.IHateoasController;
 import com.example.springangularadsapp.security.authorization.annotation.AdminAccess;
 import com.example.springangularadsapp.security.authorization.annotation.UserAccess;
 import com.example.springangularadsapp.security.models.User;
@@ -30,7 +30,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/messages")
-public class MessageController implements HateoasController<Message, MessageDto> {
+public class MessageController implements IHateoasController<Message, MessageDto> {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final MessageModelAssembler assembler;

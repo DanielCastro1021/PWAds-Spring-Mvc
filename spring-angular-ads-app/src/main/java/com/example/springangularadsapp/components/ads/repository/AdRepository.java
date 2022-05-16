@@ -1,6 +1,6 @@
-package com.example.springangularadsapp.components.ads.domain.ad;
+package com.example.springangularadsapp.components.ads.repository;
 
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.model.ad.Ad;
 import com.example.springangularadsapp.security.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

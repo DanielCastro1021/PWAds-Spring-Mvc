@@ -1,6 +1,6 @@
-package com.example.springangularadsapp.components.ads.domain.basic_ad;
+package com.example.springangularadsapp.components.ads.model.basic_ad;
 
-import com.example.springangularadsapp.components.ads.domain.ad.AdDto;
+import com.example.springangularadsapp.components.ads.model.ad.AdDto;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

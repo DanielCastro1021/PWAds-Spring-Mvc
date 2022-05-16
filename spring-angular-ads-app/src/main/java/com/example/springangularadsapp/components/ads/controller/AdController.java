@@ -1,16 +1,16 @@
-package com.example.springangularadsapp.components.ads.domain.ad.controller;
+package com.example.springangularadsapp.components.ads.controller;
 
 import com.example.springangularadsapp.components.ads.assembler.AdModelAssembler;
-import com.example.springangularadsapp.components.ads.domain.ad.Ad;
-import com.example.springangularadsapp.components.ads.domain.ad.AdRepository;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.controller.BasicAdController;
+import com.example.springangularadsapp.components.ads.model.ad.Ad;
+import com.example.springangularadsapp.components.ads.model.ad.AdDto;
+import com.example.springangularadsapp.components.ads.repository.AdRepository;
 import com.example.springangularadsapp.exceptions.AdNotFoundException;
 import com.example.springangularadsapp.security.authorization.annotation.UserAccess;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +27,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/ads")
-public class AdController {
-    private final AdRepository<Ad> repository;
-    private final AdModelAssembler<Ad> assembler;
-    private final UserRepository userRepository;
-
+public class AdController extends AdHateoasController<Ad, AdDto> {
     public AdController(AdRepository<Ad> repository, AdModelAssembler<Ad> assembler, UserRepository userRepository) {
-        this.repository = repository;
-        this.assembler = assembler;
-        this.userRepository = userRepository;
+        super(repository, assembler, userRepository);
     }
 
     /**
@@ -45,7 +39,7 @@ public class AdController {
      */
     @GetMapping("/all")
     public CollectionModel<EntityModel<Ad>> all() {
-        List<EntityModel<Ad>> ads = this.repository.findAll().stream().map(this.assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<Ad>> ads = super.getRepository().findAll().stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(AdController.class).all()).withSelfRel());
     }
 
@@ -57,8 +51,24 @@ public class AdController {
      */
     @GetMapping("/{id}")
     public EntityModel<Ad> one(@PathVariable String id) {
-        Ad ad = this.repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
-        return this.assembler.toModel(ad);
+        Ad ad = super.getRepository().findById(id).orElseThrow(() -> new AdNotFoundException(id));
+        return super.getAssembler().toModel(ad);
+    }
+
+    @Override
+    public ResponseEntity<?> save(AdDto newEntity) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> update(AdDto newEntity, String id) {
+        return null;
+    }
+
+
+    @Override
+    public ResponseEntity<?> delete(String id) {
+        return null;
     }
 
     /**
@@ -70,9 +80,9 @@ public class AdController {
     @GetMapping("/personal")
     public CollectionModel<EntityModel<Ad>> getMyBasicAds() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<User> user = this.userRepository.findByUsername(userDetails.getUsername());
+        Optional<User> user = super.getUserRepository().findByUsername(userDetails.getUsername());
 
-        List<EntityModel<Ad>> ads = this.repository.findByOwner(user.get()).stream().map(this.assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<Ad>> ads = super.getRepository().findByOwner(user.get()).stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(BasicAdController.class).all()).withSelfRel());
     }
 }

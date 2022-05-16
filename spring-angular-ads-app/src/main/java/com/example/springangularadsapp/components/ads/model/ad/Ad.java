@@ -1,6 +1,5 @@
-package com.example.springangularadsapp.components.messages;
+package com.example.springangularadsapp.components.ads.model.ad;
 
-import com.example.springangularadsapp.components.ads.domain.ad.Ad;
 import com.example.springangularadsapp.security.models.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,14 +12,16 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
-
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
-@Document(collection = "messages")
-public  class Message {
+@Document(collection = "ads")
+public abstract class Ad {
+
     @Id
     private String id;
 
@@ -31,18 +32,18 @@ public  class Message {
     private Date lastModifiedDate;
 
     @DBRef
-    private User from;
+    private User owner;
 
-    @DBRef
-    private User to;
+    private List<String> imageList;
 
-    @DBRef
-    private Ad ad;
-
-    private String message;
-
-    public Message() {
+    public Ad() {
     }
 
+    public Ad(User owner) {
+        this.owner = owner;
+    }
 
+    public boolean checkOwner(String username) {
+        return Objects.equals(this.owner.getUsername(), username);
+    }
 }

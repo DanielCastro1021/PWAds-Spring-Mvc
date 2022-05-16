@@ -1,7 +1,7 @@
 package com.example.springangularadsapp.components.messages.notifications;
 
 
-import com.example.springangularadsapp.components.messages.Message;
+import com.example.springangularadsapp.components.messages.model.Message;
 import com.example.springangularadsapp.firebase.FirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.aspectj.lang.annotation.AfterReturning;

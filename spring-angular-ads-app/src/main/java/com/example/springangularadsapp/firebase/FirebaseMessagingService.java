@@ -4,7 +4,6 @@ package com.example.springangularadsapp.firebase;
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 
-import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,8 @@ public class FirebaseMessagingService {
     }
 
 
-    public String sendMessageNotification(EntityModel<com.example.springangularadsapp.components.messages.Message> model, String token) throws FirebaseMessagingException, IOException {
-        com.example.springangularadsapp.components.messages.Message msg = model.getContent();
+    public String sendMessageNotification(EntityModel<com.example.springangularadsapp.components.messages.model.Message> model, String token) throws FirebaseMessagingException, IOException {
+        com.example.springangularadsapp.components.messages.model.Message msg = model.getContent();
         HashMap<String, String> map = new HashMap<>();
         map.put("embedded", model.getContent().toString());
         map.put("_links", model.getLinks().toString());

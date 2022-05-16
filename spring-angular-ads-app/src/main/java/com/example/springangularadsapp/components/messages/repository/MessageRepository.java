@@ -1,5 +1,6 @@
-package com.example.springangularadsapp.components.messages;
+package com.example.springangularadsapp.components.messages.repository;
 
+import com.example.springangularadsapp.components.messages.model.Message;
 import com.example.springangularadsapp.security.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

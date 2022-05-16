@@ -1,14 +1,13 @@
-package com.example.springangularadsapp.components.ads.domain.basic_ad.controller;
+package com.example.springangularadsapp.components.ads.controller;
 
 import com.example.springangularadsapp.components.ads.assembler.AdModelAssembler;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAd;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAdDto;
-import com.example.springangularadsapp.components.ads.domain.basic_ad.BasicAdRepository;
+import com.example.springangularadsapp.components.ads.repository.AdRepository;
+import com.example.springangularadsapp.components.ads.model.basic_ad.BasicAd;
+import com.example.springangularadsapp.components.ads.model.basic_ad.BasicAdDto;
 import com.example.springangularadsapp.components.ads.mapper.AdMapper;
 import com.example.springangularadsapp.security.authorization.annotation.UserAccess;
 import com.example.springangularadsapp.exceptions.AdNotFoundException;
 import com.example.springangularadsapp.exceptions.UserNotFoundException;
-import com.example.springangularadsapp.constants.HateoasController;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.repository.UserRepository;
 import org.springframework.hateoas.CollectionModel;
@@ -32,16 +31,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/ads/basic")
-public class BasicAdController implements HateoasController<BasicAd, BasicAdDto> {
-    private final BasicAdRepository repository;
-    private final UserRepository userRepository;
-    private final AdModelAssembler<BasicAd> assembler;
+public class BasicAdController extends AdHateoasController<BasicAd, BasicAdDto> {
     private final AdMapper mapper;
 
-    public BasicAdController(BasicAdRepository repository, UserRepository userRepository, AdModelAssembler<BasicAd> assembler, AdMapper mapper) {
-        this.repository = repository;
-        this.userRepository = userRepository;
-        this.assembler = assembler;
+    public BasicAdController(AdRepository<BasicAd> repository, UserRepository userRepository, AdModelAssembler<BasicAd> assembler, AdMapper mapper) {
+        super(repository, assembler, userRepository);
         this.mapper = mapper;
     }
 
@@ -52,7 +46,7 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
      */
     @GetMapping("/")
     public CollectionModel<EntityModel<BasicAd>> all() {
-        List<EntityModel<BasicAd>> ads = this.repository.findAll().stream().map(this.assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<BasicAd>> ads = super.getRepository().findAll().stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(BasicAdController.class).all()).withSelfRel());
     }
 
@@ -64,8 +58,8 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
      */
     @GetMapping("/{id}")
     public EntityModel<BasicAd> one(@PathVariable String id) {
-        BasicAd basicAd = this.repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
-        return this.assembler.toModel(basicAd);
+        BasicAd basicAd = super.getRepository().findById(id).orElseThrow(() -> new AdNotFoundException(id));
+        return super.getAssembler().toModel(basicAd);
     }
 
     /**
@@ -78,7 +72,7 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
     @UserAccess
     @PostMapping("/")
     public ResponseEntity<?> save(@RequestBody BasicAdDto newEntity) throws UserNotFoundException {
-        EntityModel<BasicAd> entityModel = this.assembler.toModel(this.repository.save(this.mapper.basicAdDtoToBasicAd(newEntity)));
+        EntityModel<BasicAd> entityModel = super.getAssembler().toModel(super.getRepository().save(this.mapper.basicAdDtoToBasicAd(newEntity)));
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
     }
 
@@ -96,23 +90,23 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
     public ResponseEntity<?> update(@RequestBody BasicAdDto newEntity, @PathVariable String id) throws UserNotFoundException {
         BasicAd newAd = this.mapper.basicAdDtoToBasicAd(newEntity);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
-            if (!newAd.checkOwner(userDetails.getUsername()) || !request.isUserInRole("ROLE_ADMIN"))
-                throw new AdNotFoundException(userDetails.getUsername(), "doesn't own this ad:" + newAd);
-            else {
-            BasicAd updatedAd = this.repository.findById(id).map(basicAd -> {
+        if (!newAd.checkOwner(userDetails.getUsername()) || !request.isUserInRole("ROLE_ADMIN"))
+            throw new AdNotFoundException(userDetails.getUsername(), "doesn't own this ad:" + newAd);
+        else {
+            BasicAd updatedAd = super.getRepository().findById(id).map(basicAd -> {
                 basicAd.setTitle(newAd.getTitle());
                 basicAd.setDescription(newAd.getDescription());
                 basicAd.setOwner(newAd.getOwner());
                 basicAd.setImageList(newAd.getImageList());
-                return repository.save(basicAd);
+                return super.getRepository().save(basicAd);
             }).orElseGet(() -> {
                 newAd.setId(id);
-                return repository.save(newAd);
+                return super.getRepository().save(newAd);
             });
 
-            EntityModel<BasicAd> entityModel = this.assembler.toModel(updatedAd);
+            EntityModel<BasicAd> entityModel = super.getAssembler().toModel(updatedAd);
             return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
         }
     }
@@ -127,12 +121,12 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
     @UserAccess
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        BasicAd ad = this.repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
+        BasicAd ad = super.getRepository().findById(id).orElseThrow(() -> new AdNotFoundException(id));
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 
         if (ad.checkOwner(userDetails.getUsername()) || request.isUserInRole("ROLE_ADMIN")) {
-            this.repository.deleteById(ad.getId());
+            super.getRepository().deleteById(ad.getId());
             return ResponseEntity.noContent().build();
         } else throw new AdNotFoundException(userDetails.getUsername(), "doesn't own this ad:" + ad);
     }
@@ -147,9 +141,9 @@ public class BasicAdController implements HateoasController<BasicAd, BasicAdDto>
     @GetMapping("/personal")
     public CollectionModel<EntityModel<BasicAd>> getMyBasicAds() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<User> user = this.userRepository.findByUsername(userDetails.getUsername());
+        Optional<User> user = super.getUserRepository().findByUsername(userDetails.getUsername());
 
-        List<EntityModel<BasicAd>> ads = this.repository.findByOwner(user.get()).stream().map(this.assembler::toModel).collect(Collectors.toList());
+        List<EntityModel<BasicAd>> ads = super.getRepository().findByOwner(user.get()).stream().map(super.getAssembler()::toModel).collect(Collectors.toList());
         return CollectionModel.of(ads, linkTo(methodOn(BasicAdController.class).all()).withSelfRel());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.springangularadsapp.components.messages;
+package com.example.springangularadsapp.components.messages.model;
 
 import lombok.Data;
 import lombok.Getter;

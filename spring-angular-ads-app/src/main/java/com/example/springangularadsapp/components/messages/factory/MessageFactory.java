@@ -1,7 +1,7 @@
 package com.example.springangularadsapp.components.messages.factory;
 
-import com.example.springangularadsapp.components.messages.Message;
-import com.example.springangularadsapp.components.messages.MessageDto;
+import com.example.springangularadsapp.components.messages.model.Message;
+import com.example.springangularadsapp.components.messages.model.MessageDto;
 import org.springframework.stereotype.Component;
 
 @Component
