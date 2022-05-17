@@ -2,7 +2,7 @@ package com.example.springangularadsapp.components.messages.notifications;
 
 
 import com.example.springangularadsapp.components.messages.model.Message;
-import com.example.springangularadsapp.firebase.FirebaseMessagingService;
+import com.example.springangularadsapp.firebase.CustomFirebaseMessagingService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,10 +18,10 @@ import java.io.IOException;
 @Component
 @Aspect
 public class SendPushNotification {
-    private final FirebaseMessagingService firebaseMessagingService;
+    private final CustomFirebaseMessagingService firebaseMessagingService;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public SendPushNotification(FirebaseMessagingService firebaseMessagingService) {
+    public SendPushNotification(CustomFirebaseMessagingService firebaseMessagingService) {
         this.firebaseMessagingService = firebaseMessagingService;
     }
 

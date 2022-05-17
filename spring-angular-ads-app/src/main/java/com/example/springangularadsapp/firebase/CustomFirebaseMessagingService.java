@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @Service
-public class FirebaseMessagingService {
+public class CustomFirebaseMessagingService {
 
-    private final FirebaseMessagingImpl firebaseMessaging;
+    private final CustomFirebaseMessaging firebaseMessaging;
 
-    public FirebaseMessagingService(FirebaseMessagingImpl firebaseMessaging) {
+    public CustomFirebaseMessagingService(CustomFirebaseMessaging firebaseMessaging) {
         this.firebaseMessaging = firebaseMessaging;
     }
 

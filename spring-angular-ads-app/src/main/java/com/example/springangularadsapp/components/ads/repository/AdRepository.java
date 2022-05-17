@@ -9,3 +9,4 @@ import java.util.List;
 public interface AdRepository<T extends Ad> extends MongoRepository<T, String> {
     List<T> findByOwner(User owner);
 }
+

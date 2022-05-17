@@ -14,6 +14,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class MessageModelAssembler implements RepresentationModelAssembler<Message, EntityModel<Message>> {
     @Override
     public EntityModel<Message> toModel(Message message) {
-        return EntityModel.of(message, WebMvcLinkBuilder.linkTo(methodOn(MessageController.class).one(message.getId())).withSelfRel(), linkTo(methodOn(MessageController.class).all()).withRel("messages"));
+        return EntityModel.of(message, WebMvcLinkBuilder.linkTo(methodOn(MessageController.class).one(message.getId())).withSelfRel()
+                , linkTo(methodOn(MessageController.class).all()).withRel("messages"));
     }
 }

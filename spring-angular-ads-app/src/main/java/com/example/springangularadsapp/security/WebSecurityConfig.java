@@ -1,5 +1,7 @@
 package com.example.springangularadsapp.security;
 
+import com.example.springangularadsapp.security.services.CustomUserDetailsService;
+import com.example.springangularadsapp.security.utils.AuthEntryPointJwt;
 import com.example.springangularadsapp.security.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.springangularadsapp.security.utils.AuthEntryPointJwt;
 import com.example.springangularadsapp.security.utils.AuthTokenFilter;
-import com.example.springangularadsapp.security.services.CustomUserDetailsService;
 
 @Configuration
 //@EnableWebSecurity

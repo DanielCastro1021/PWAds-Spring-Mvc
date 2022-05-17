@@ -14,10 +14,10 @@ import java.io.IOException;
 @RequestMapping("/api/firebase")
 public class FirebaseTestController {
     /*******************************/
-    private final FirebaseMessagingService firebaseService;
+    private final CustomFirebaseMessagingService firebaseService;
     private final MessageModelAssembler assembler;
 
-    public FirebaseTestController(FirebaseMessagingService firebaseService, MessageModelAssembler assembler) {
+    public FirebaseTestController(CustomFirebaseMessagingService firebaseService, MessageModelAssembler assembler) {
         this.firebaseService = firebaseService;
         this.assembler = assembler;
     }

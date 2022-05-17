@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class FirebaseMessagingImpl {
+public class CustomFirebaseMessaging {
     private FirebaseApp app;
 
     FirebaseMessaging firebaseMessaging() throws IOException {
@@ -26,6 +26,6 @@ public class FirebaseMessagingImpl {
         } catch (Exception ignored) {
 
         }
-        return com.google.firebase.messaging.FirebaseMessaging.getInstance(app);
+        return FirebaseMessaging.getInstance(app);
     }
 }

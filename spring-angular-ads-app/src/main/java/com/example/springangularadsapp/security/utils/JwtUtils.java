@@ -2,13 +2,13 @@ package com.example.springangularadsapp.security.utils;
 
 import java.util.Date;
 
+import com.example.springangularadsapp.security.services.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.springangularadsapp.security.services.CustomUserDetails;
 import io.jsonwebtoken.*;
 
 @Component

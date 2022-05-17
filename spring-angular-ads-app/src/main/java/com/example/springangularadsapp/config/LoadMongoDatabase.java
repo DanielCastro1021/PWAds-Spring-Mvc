@@ -16,7 +16,6 @@ public class LoadMongoDatabase {
     @Bean
     CommandLineRunner initDatabase(RoleRepository roleRepository) {
         return args -> {
-
             if (!roleRepository.existsByName(ERole.ROLE_USER)) {
                 roleRepository.save(new Role(ERole.ROLE_USER));
                 log.info("LoadDatabaseRoles => added ERole.ROLE_USER");

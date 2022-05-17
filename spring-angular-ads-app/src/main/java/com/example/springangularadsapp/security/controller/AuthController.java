@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.example.springangularadsapp.security.models.ERole;
+import com.example.springangularadsapp.security.models.Role;
+import com.example.springangularadsapp.security.services.CustomUserDetails;
+import com.example.springangularadsapp.security.utils.JwtUtils;
 import com.example.springangularadsapp.security.dto.request.SignupRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,16 +25,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springangularadsapp.security.models.ERole;
-import com.example.springangularadsapp.security.models.Role;
 import com.example.springangularadsapp.security.models.User;
 import com.example.springangularadsapp.security.dto.request.LoginRequest;
 import com.example.springangularadsapp.security.dto.response.JwtResponse;
 import com.example.springangularadsapp.security.dto.response.MessageResponse;
 import com.example.springangularadsapp.security.repository.RoleRepository;
 import com.example.springangularadsapp.security.repository.UserRepository;
-import com.example.springangularadsapp.security.utils.JwtUtils;
-import com.example.springangularadsapp.security.services.CustomUserDetails;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

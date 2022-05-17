@@ -1,7 +1,7 @@
 package com.example.springangularadsapp.security.authorization.aspect;
 
-import com.example.springangularadsapp.security.exception.UnauthorizedAccessException;
 import com.example.springangularadsapp.security.models.ERole;
+import com.example.springangularadsapp.security.exception.UnauthorizedAccessException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
