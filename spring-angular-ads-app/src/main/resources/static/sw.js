@@ -11,6 +11,8 @@ let staticAssets = [
     '/icons/ios/100.png',
     '/icons/ios/144.png',
     '/img/home-img-placeholder.png',
+    '/img/home-img-placeholder-340_x_220.png',
+    '/img/home-img-placeholder-480_x_300.png',
     '/img/broken-1.png',
     '/components/ads/list-ads.html',
     '/components/ads/list-ads.js',
@@ -20,7 +22,14 @@ let staticAssets = [
     '/components/authentication/login.html',
     '/components/authentication/login.js',
     '/components/authentication/register.html',
-    '/components/authentication/register.js'
+    '/components/authentication/register.js',
+    'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+    'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
+    'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js',
+    'https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js',
+    'https://www.gstatic.com/firebasejs/6.6.2/firebase-messaging.js',
 ];
 
 self.addEventListener('install', (event) => {
