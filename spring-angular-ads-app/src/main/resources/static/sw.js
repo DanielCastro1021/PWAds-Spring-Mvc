@@ -20,14 +20,7 @@ let staticAssets = [
     '/components/authentication/login.html',
     '/components/authentication/login.js',
     '/components/authentication/register.html',
-    '/components/authentication/register.js',
-    'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-    'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',
-    'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js',
-    'https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js',
-    'https://www.gstatic.com/firebasejs/6.6.2/firebase-messaging.js',
+    '/components/authentication/register.js'
 ];
 
 self.addEventListener('install', (event) => {
@@ -55,9 +48,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.open(CACHE_NAME).then((cache) => {
-            // Go to the cache first
+    event.respondWith(caches.open(CACHE_NAME).then((cache) => {
+        // Go to the network first
+        return fetch(event.request.url).then((fetchedResponse) => {
+            console.log("Fetch First!!!")
+            if (event.request.method === 'GET') {
+                cache.put(event.request, fetchedResponse.clone());
+            }
+            // Return the network response
+            return fetchedResponse;
+        }).catch(() => {
+            console.log("Falling back to cache!!!")
+            // If the network is unavailable, get from cache
             return cache.match(event.request.url).then((cachedResponse) => {
                 // Return a cached response if we have one
                 if (cachedResponse) {
@@ -66,24 +68,16 @@ self.addEventListener('fetch', (event) => {
                     }
                     return cachedResponse;
                 }
-                // Otherwise, hit the network
-                return fetch(event.request)
-                    .then((fetchedResponse) => {
-                        // Add the network response to the cache for later visits
-                        if (event.request.method === 'GET') {
-                            cache.put(event.request, fetchedResponse.clone());
-                        }
-                        // Return the network response
-                        return fetchedResponse;
-                    })
-                    .catch((error) => {
-                        console.log('Fetch failed; returning offline page instead.', error);
-                        return cache.match('/html/fallout.html');
-                    });
+            }).catch((error) => {
+                console.log('Fetch failed; returning offline page instead.', error);
+                return cache.match('/html/fallout.html');
             });
-        })
-    );
+        });
+    }));
 });
+
+
+
 
 self.addEventListener('push', (event) => {
     let payload = event.data ? event.data.text() : 'no payload';
@@ -154,18 +148,4 @@ function getToken(event) {
             console.log('An error occurred while retrieving token. ', err);
             // catch error while creating client token
         });
-}
-
-function deleteToken() {
-    // [START messaging_delete_token]
-    messaging
-        .deleteToken()
-        .then(() => {
-            console.log('Token deleted.');
-            // ...
-        })
-        .catch((err) => {
-            console.log('Unable to delete token. ', err);
-        });
-    // [END messaging_delete_token]
 }

@@ -1,6 +1,7 @@
 package com.example.springangularadsapp.firebase;
 
 
+import com.example.springangularadsapp.components.messages.model.Message;
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 
@@ -21,8 +22,8 @@ public class CustomFirebaseMessagingService {
     }
 
 
-    public String sendMessageNotification(EntityModel<com.example.springangularadsapp.components.messages.model.Message> model, String token) throws FirebaseMessagingException, IOException {
-        com.example.springangularadsapp.components.messages.model.Message msg = model.getContent();
+    public String sendMessageNotification(EntityModel<Message> model, String token) throws FirebaseMessagingException, IOException {
+        Message msg = model.getContent();
         HashMap<String, String> map = new HashMap<>();
         map.put("embedded", model.getContent().toString());
         map.put("_links", model.getLinks().toString());

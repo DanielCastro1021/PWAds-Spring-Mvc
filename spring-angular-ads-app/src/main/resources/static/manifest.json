@@ -6,6 +6,7 @@
   "scope": "/",
   "gcm_sender_id": "370072803732",
   "background_color": "#ee8d32",
+  "orientation": "landscape",
   "display": "standalone",
   "theme_color": "#ee8d32",
   "lang": "en-US",
@@ -413,7 +414,8 @@
     },
     {
       "src": "./icons/ios/100.png",
-      "sizes": "100x100"
+      "sizes": "100x100",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/ios/114.png",
