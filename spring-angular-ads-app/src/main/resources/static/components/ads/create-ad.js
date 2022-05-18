@@ -19,6 +19,7 @@ async function postAd(path, body) {
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
+      window.location.href="view-ad.html?id="+json["id"]
     })
     .catch((error) => console.log(error));
 }

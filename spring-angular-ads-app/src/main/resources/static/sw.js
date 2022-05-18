@@ -23,7 +23,8 @@ let staticAssets = [
     '/components/authentication/login.js',
     '/components/authentication/register.html',
     '/components/authentication/register.js',
-    'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+    'https://code.jquery.com/jquery-3.6.0.min.js',
     'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css',
     'https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js',
@@ -59,33 +60,28 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     event.respondWith(caches.open(CACHE_NAME).then((cache) => {
         // Go to the network first
-        return fetch(event.request.url).then((fetchedResponse) => {
-            console.log("Fetch First!!!")
-            if (event.request.method === 'GET') {
+        return fetch(event.request).then((fetchedResponse) => {
+            if (event.request.method === "GET") {
                 cache.put(event.request, fetchedResponse.clone());
             }
             // Return the network response
             return fetchedResponse;
         }).catch(() => {
-            console.log("Falling back to cache!!!")
-            // If the network is unavailable, get from cache
+            if (event.request.method !== 'GET') {
+                return Promise.reject('no-match');
+            }
+            // If the network is unavailable, get
             return cache.match(event.request.url).then((cachedResponse) => {
                 // Return a cached response if we have one
                 if (cachedResponse) {
-                    if (event.request.method !== 'GET') {
-                        return Promise.reject('no-match');
-                    }
                     return cachedResponse;
+                } else {
+                    return cache.match('/html/fallout.html');
                 }
-            }).catch((error) => {
-                console.log('Fetch failed; returning offline page instead.', error);
-                return cache.match('/html/fallout.html');
             });
         });
     }));
 });
-
-
 
 
 self.addEventListener('push', (event) => {
@@ -119,13 +115,13 @@ const vapidKey =
     'BCX_it2GStqQGsv1IJRzyLzCjEvo-adRhY47KUKvOBGhd0nNH2xyRN90oojy0Da7s66vZ-FwbECkdj9OAXNfMWw';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyBH0o09K98VCIAfX2ng8nKj0-_2pbAIPUk',
-    authDomain: 'pwads-app.firebaseapp.com',
-    projectId: 'pwads-app',
-    storageBucket: 'pwads-app.appspot.com',
-    messagingSenderId: '63582499105',
-    appId: '1:63582499105:web:810f385ca66e61fc3a4e60',
-    measurementId: 'G-MR0N6J3ZSX',
+    apiKey: "AIzaSyBH0o09K98VCIAfX2ng8nKj0-_2pbAIPUk",
+    authDomain: "pwads-app.firebaseapp.com",
+    projectId: "pwads-app",
+    storageBucket: "pwads-app.appspot.com",
+    messagingSenderId: "63582499105",
+    appId: "1:63582499105:web:0ac476f856ae32833a4e60",
+    measurementId: "G-2YKNJ02RNL"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

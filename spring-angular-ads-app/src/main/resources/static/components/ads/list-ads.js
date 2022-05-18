@@ -22,7 +22,6 @@ function transitionAdsList() {
 }
 
 function getHtmlAdItem(ad) {
-    console.log(ad);
     let $htmlAdItem = $('<li>')
         .addClass(
             'list-group-item list-group-item-action flex-column align-items-start'

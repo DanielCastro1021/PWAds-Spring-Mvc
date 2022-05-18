@@ -26,7 +26,7 @@ if ('serviceWorker' in navigator) {
 
 async function postLogin(user) {
     const options = {
-        method: 'post',
+        method: 'POST',
         headers: new Headers({'content-type': 'application/json'}),
     };
 
